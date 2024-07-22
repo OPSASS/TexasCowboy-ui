@@ -1,0 +1,8 @@
+@import '../../GlobalStyles/responsive.scss';
+.navBody {
+  position: absolute;
+  z-index: 100;
+  padding: 48px 24px;
+  width: 100%;
+  background-color: transparent !important;
+}

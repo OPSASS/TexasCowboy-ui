@@ -1,0 +1,53 @@
+@import '../../GlobalStyles/responsive.scss';
+
+.footer {
+  padding: 0;
+  .footerLeft .content {
+    font-weight: 700;
+  }
+  li {
+    margin-left: -10px;
+  }
+  .divider {
+    border: 1px solid var(--light-gray);
+
+    height: 220px;
+    @include respond-to(xs) {
+      height: 100%;
+      width: 100%;
+      margin: 24px 0;
+    }
+    @include respond-to(sm) {
+      height: 100%;
+      width: 100%;
+      margin: 24px 0;
+    }
+  }
+  .inquiryButt,
+  .consultationButt {
+    border-radius: 25px;
+    border-style: 2px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    -o-border-radius: 25px;
+  }
+  .inquiryButt {
+    color: var(--primary) !important;
+    border: 2px solid var(--primary);
+
+    &:hover {
+      color: var(--white) !important;
+      background-color: var(--primary) !important;
+    }
+  }
+  .consultationButt {
+    background-color: var(--secondary);
+    border: 2px solid var(--secondary);
+    padding-right: 18px;
+    &:hover {
+      color: var(--secondary) !important;
+      background-color: transparent !important;
+    }
+  }
+}

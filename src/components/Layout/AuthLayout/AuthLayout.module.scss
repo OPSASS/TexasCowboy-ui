@@ -1,0 +1,7 @@
+.authMain {
+  height: 100vh;
+  .children {
+    position: relative;
+    height: min(100% - 82px);
+  }
+}

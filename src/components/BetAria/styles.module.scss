@@ -1,0 +1,41 @@
+.bettingButton {
+  padding: 0.5em 0;
+  min-height: 10vh;
+  width: 100%;
+
+  background-color: #fff9ae;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  p {
+    line-height: 1;
+  }
+  .content {
+    width: 15em;
+    font-size: 0.9em;
+    min-height: 2em;
+    font-weight: bold;
+    color: #b16d00;
+  }
+  .valuation {
+    font-size: 0.7em;
+    color: #d30707;
+  }
+  .showWin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2em;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+  }
+  .showCount {
+    font-size: 0.75em;
+  }
+}

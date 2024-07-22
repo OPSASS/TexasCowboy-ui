@@ -1,0 +1,39 @@
+@import '../../GlobalStyles/responsive.scss';
+
+.headerMain {
+  position: relative;
+  .typo {
+    text-align: center;
+    .header {
+      margin-bottom: 25px;
+    }
+    .desc {
+      font-size: 18px;
+      font-weight: 400;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      margin-top: 30px;
+      @include respond-to(xl) {
+        font-size: 20px;
+      }
+      @include respond-to(xxl) {
+        font-size: 20px;
+      }
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 50px;
+      @include respond-to(xl) {
+        font-size: 50px;
+      }
+      @include respond-to(xxl) {
+        font-size: 50px;
+      }
+      & > * {
+        max-width: 788px;
+        margin: 0 auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.table {
+  position: relative;
+  inset: 0;
+  margin: 7vh auto;
+  width: 100%;
+  height: 85vh;
+  background: radial-gradient(circle, #008d2f, #004911 80%);
+  border: solid 15px #523124;
+  border-radius: 999em 999em 999em 999em;
+  outline-offset: -22px;
+  outline: 8px solid #d17541;
+  .contentColor {
+    margin-top: 0.5em;
+    color: white;
+    font-weight: bold;
+  }
+  .growthArea {
+    padding: 5px;
+    background-color: #d17541;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    .growthBody {
+      border-radius: 10px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      -ms-border-radius: 10px;
+      -o-border-radius: 10px;
+    }
+  }
+  .bettingArea {
+    background-color: #b16d00;
+    margin-top: 20px;
+    padding: 6px;
+    width: 66%;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+  }
+  .showResult {
+    position: absolute;
+    top: 3em;
+    color: rgb(209, 23, 23);
+    z-index: 10;
+  }
+}
