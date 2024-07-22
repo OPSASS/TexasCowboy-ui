@@ -16,10 +16,7 @@ const Nav = () => {
             <ButtonCustom icon={<MenuOutlined />}></ButtonCustom>
             <ButtonCustom icon={<SettingFilled />}></ButtonCustom>
           </Space>
-          <Space direction='vertical' align='center'>
-            <p>Jackpot</p>
-            <h2>3.454.112</h2>
-          </Space>
+
           <h3>$3333M +</h3>
         </Flex>
       </nav>

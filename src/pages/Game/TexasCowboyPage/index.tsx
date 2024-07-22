@@ -8,10 +8,14 @@ import { HistoriesState } from '@/types/histories.type'
 import { PokerState } from '@/types/poker.type'
 import { RightOutlined, RiseOutlined } from '@ant-design/icons'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { Col, Flex, Row, Space } from 'antd'
+import { Col, Flex, Row } from 'antd'
 import { useEffect, useState } from 'react'
 import bgTx from '../../../assets/JPG/background-texas.jpg'
+import boy from '../../../assets/PNG/Boy.png'
+import girl from '../../../assets/PNG/Girl.png'
+import jackpot from '../../../assets/PNG/jackpot.png'
 import style from './styles.module.scss'
+
 const TexasCowboyPage = () => {
   const initCards = { player1: [0, 0], player2: [0, 0], dealer: [0, 0, 0, 0, 0] }
   const [turn, setTurn] = useState<PokerState>(initCards)
@@ -57,7 +61,7 @@ const TexasCowboyPage = () => {
       setTimeout(() => {
         historyMutation.mutate(data.data.historyId)
         setShowResult(true)
-      }, 1800)
+      }, 2000)
 
       setTimeout(() => {
         setTurn(initCards)
@@ -80,6 +84,47 @@ const TexasCowboyPage = () => {
     <Container size='sm' backgroundUrl={bgTx} imgStyle={{ position: 'fixed' }}>
       <div className={style.table}>
         <Flex justify='space-between' align='center' vertical>
+          <Flex justify='space-between'>
+            <div
+              className={`${style.boy} ${
+                showResult && historyData?.gameHistory?.result[0]?.result === 'lose' && style.lose
+              }`}
+            >
+              <img src={boy} alt='boy' />
+              <div className={style.showResult}>
+                {showResult && historyData?.gameHistory?.result && (
+                  <h1 className={style.sweetTitle}>
+                    <p data-text={historyData?.gameHistory?.result[0]?.rankString}>
+                      {historyData?.gameHistory?.result[0]?.rankString}
+                    </p>
+                  </h1>
+                )}
+              </div>
+            </div>
+            <div className={style.jackpot}>
+              <img src={jackpot} alt='jackpot' />
+              <div className={style.content}>
+                <p>Jackpot</p>
+                <h2>3.454.112</h2>
+              </div>
+            </div>
+            <div
+              className={`${style.girl} ${
+                showResult && historyData?.gameHistory?.result[1]?.result === 'lose' && style.lose
+              }`}
+            >
+              <img src={girl} alt='girl' />
+              <div className={style.showResult}>
+                {showResult && historyData?.gameHistory?.result && (
+                  <h1 className={style.sweetTitle}>
+                    <p data-text={historyData?.gameHistory?.result[1]?.rankString}>
+                      {historyData?.gameHistory?.result[1]?.rankString}
+                    </p>
+                  </h1>
+                )}
+              </div>
+            </div>
+          </Flex>
           <Row gutter={[24, 24]} align='bottom' style={{ marginTop: 40 }}>
             <Col span={6}>
               <Flex justify='space-between' gap={6}>
@@ -93,15 +138,6 @@ const TexasCowboyPage = () => {
                   />
                 ))}
               </Flex>
-              <div className={style.showResult}>
-                {showResult && historyData?.gameHistory?.result && (
-                  <Space direction='vertical' size='large'>
-                    <h3>{historyData?.gameHistory?.result[0]?.playerIndex}</h3>
-                    {historyData?.gameHistory?.result[0]?.rankString}
-                    <h1>{historyData?.gameHistory?.result[0]?.result}</h1>
-                  </Space>
-                )}
-              </div>
             </Col>
             <Col span={12}>
               <Flex vertical justify='center' align='center' gap={6}>
@@ -143,15 +179,6 @@ const TexasCowboyPage = () => {
                   />
                 ))}
               </Flex>
-              <div className={style.showResult}>
-                {showResult && historyData?.gameHistory?.result && (
-                  <Space direction='vertical' size='large'>
-                    <h3>{historyData?.gameHistory?.result[1]?.playerIndex}</h3>
-                    {historyData?.gameHistory?.result[1]?.rankString}
-                    <h1>{historyData?.gameHistory?.result[1]?.result}</h1>
-                  </Space>
-                )}
-              </div>
             </Col>
           </Row>
           <div className={style.bettingArea}>

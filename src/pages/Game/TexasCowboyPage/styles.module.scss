@@ -1,7 +1,7 @@
 .table {
   position: relative;
   inset: 0;
-  margin: 7vh auto;
+  margin: 12vh auto 0;
   width: 100%;
   height: 85vh;
   background: radial-gradient(circle, #008d2f, #004911 80%);
@@ -9,6 +9,86 @@
   border-radius: 999em 999em 999em 999em;
   outline-offset: -22px;
   outline: 8px solid #d17541;
+  .lose {
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1);
+  }
+  .boy,
+  .girl,
+  .jackpot {
+    position: absolute;
+    z-index: 20;
+    img {
+      width: 100%;
+    }
+  }
+
+  .showResult {
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+
+    .sweetTitle {
+      order: 2;
+      color: #ffffff;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 2em;
+      line-height: 0.75em;
+      text-align: center;
+      text-shadow: black;
+
+      p {
+        display: block;
+        position: relative;
+
+        &:before {
+          content: attr(data-text);
+          position: absolute;
+          text-shadow: 2px 2px 1px #af7c06, -1px -1px 1px #fff024, -2px 2px 1px #e0b509, 1px -1px 1px #f2b203;
+          z-index: 1;
+        }
+
+        &:nth-child(1) {
+          padding-right: 2.25rem;
+        }
+
+        &:nth-child(2) {
+          padding-left: 2.25rem;
+        }
+      }
+    }
+  }
+  .boy {
+    top: -5em;
+    left: -6em;
+    width: 22em;
+    .showResult {
+      margin-left: 9em;
+      margin-bottom: 1.5em;
+    }
+  }
+  .girl {
+    top: -5em;
+    right: -5em;
+    width: 21em;
+    .showResult {
+      margin-left: 2em;
+      margin-bottom: 1em;
+    }
+  }
+  .jackpot {
+    top: -6.5em;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 15em;
+
+    .content {
+      margin-top: -8em;
+      color: white;
+    }
+  }
   .contentColor {
     margin-top: 0.5em;
     color: white;
@@ -40,11 +120,5 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-  }
-  .showResult {
-    position: absolute;
-    top: 3em;
-    color: rgb(209, 23, 23);
-    z-index: 10;
   }
 }

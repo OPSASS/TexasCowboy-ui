@@ -1,5 +1,6 @@
 import { GameHistory } from '@/types/histories.type'
 import { Col, Flex } from 'antd'
+import winstiker from '../../assets/PNG/winstiker.png'
 import ButtonCustom from '../ButtonCustom/ButtonCustom'
 import RenderDot from '../RenderDot'
 import style from './styles.module.scss'
@@ -25,9 +26,11 @@ const BetAria = (props: Props) => {
           <Flex vertical gap={3}>
             <p className={style.valuation}>{valuation}</p>
             <Flex gap={5} justify='center'>
-              <div className={style.showWin}>{showWin && data?.[checkKey]?.at(-1) && 'Win'}</div>
+              <div className={style.showWin}>
+                {showWin && data?.[checkKey]?.at(-1) && <img src={winstiker} alt='win' />}
+              </div>
               {data?.[countKey] > 12 ? (
-                <p className={style.showCount}>{data?.[countKey]} has not appeared yet</p>
+                <p className={style.showCount}>{data?.[countKey]} Never out</p>
               ) : (
                 data?.[checkKey]?.map((i: any, id: number) => <RenderDot result={i} key={id + checkKey} />)
               )}
