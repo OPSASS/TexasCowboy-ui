@@ -23,6 +23,19 @@
     font-size: 0.7em;
     color: #d30707;
   }
+  .bettingValue {
+    position: absolute;
+    padding: 0.1em 1.5em;
+    color: white;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65) 15% 85%, rgba(0, 0, 0, 0));
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%);
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
+    -ms-transform: translate(-50%);
+    -o-transform: translate(-50%);
+  }
   .showWin {
     position: absolute;
     top: 50%;
@@ -34,8 +47,21 @@
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
+
+    img {
+      width: 80%;
+    }
   }
+
   .showCount {
     font-size: 0.75em;
   }
+}
+.disabled,
+.hidden {
+  pointer-events: none;
+}
+.disabled {
+  filter: brightness(0.8);
+  -webkit-filter: brightness(0.8);
 }

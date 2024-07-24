@@ -12,10 +12,10 @@ const Notification = (
     type,
     message:
       message ||
-      (type === 'info' && '情報') ||
-      (type === 'success' && '成功') ||
-      (type === 'error' && 'エラー') ||
-      (type === 'warning' && '警告'),
+      (type === 'info' && 'Info') ||
+      (type === 'success' && 'Success') ||
+      (type === 'error' && 'Error') ||
+      (type === 'warning' && 'Warning'),
     description,
     placement: placement || 'topRight',
     duration
@@ -34,4 +34,4 @@ const Message = (
   })
 }
 
-export { Notification, Message }
+export { Message, Notification }

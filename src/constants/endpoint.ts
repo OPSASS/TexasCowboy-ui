@@ -2,7 +2,7 @@ export const ENDPOINT = {
   // :::::::::::::::::::: AUTH PATH :::::::::::::::::::::
   LOGIN: '/auth/signin',
   REGISTER: '/auth/signup',
-  LOGOUT: '/auth/logout',
+  LOGOUT: '/auth/logout?id=',
 
   // :::::::::::::::::::: USER PATH :::::::::::::::::::::
   USERS_PATH: '/users/',
@@ -11,6 +11,7 @@ export const ENDPOINT = {
   // :::::::::::::::::::: POKER PATH :::::::::::::::::::::
   POKER_PATH: '/poker/',
   FIND_POKER_PATH: '/poker/find',
+  POKER_BETTING_PATH: '/poker/betting',
 
   // :::::::::::::::::::: WALLET PATH :::::::::::::::::::::
   WALLET_PATH: '/wallet/',

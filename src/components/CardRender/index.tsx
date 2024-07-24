@@ -52,7 +52,7 @@ const GetSuit = ({ suit = '♥️', size = 14 }: { suit?: string; size?: number 
   )
 }
 
-const CardRender = ({ cardNumber = 0, timer = 10000, delay = 500, cardImg = backCard, cardSize = 14 }: Props) => {
+const CardRender = ({ cardNumber = 0, timer = 10000, delay = 0, cardImg = backCard, cardSize = 14 }: Props) => {
   const [card, setCard] = useState<CardSuit | null>()
   const [flip, setFlip] = useState(false)
 

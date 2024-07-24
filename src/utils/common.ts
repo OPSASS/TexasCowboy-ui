@@ -286,3 +286,19 @@ export const debounce = (func: any, timeout = 500) => {
     }, timeout)
   }
 }
+
+export function formatNumber(num: number) {
+  const formatter = new Intl.NumberFormat('vi-VN')
+  if (num >= 1000000000) {
+    let formattedNum = Math.floor((num / 1000000000) * 10) / 10
+    return formattedNum + 'B'
+  } else if (num >= 1000000) {
+    let formattedNum = Math.floor((num / 1000000) * 10) / 10
+    return formattedNum + 'M'
+  } else if (num >= 10000) {
+    let formattedNum = Math.floor((num / 1000) * 10) / 10
+    return formattedNum + 'K'
+  } else {
+    return formatter.format(num)
+  }
+}

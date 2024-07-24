@@ -9,3 +9,17 @@ export interface PokerState {
   createdAt?: string
   updatedAt?: string
 }
+
+export interface BettingDataState {
+  key: string
+  coin: number
+}
+
+export interface BettingState {
+  userId: string
+  gameId: string
+  detailedHistory: BettingDataState[]
+  totalCoin?: number
+  createdAt?: string
+  updatedAt?: string
+}

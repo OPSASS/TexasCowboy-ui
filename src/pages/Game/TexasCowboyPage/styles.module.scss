@@ -27,17 +27,19 @@
     position: absolute;
     bottom: 0;
     z-index: 10;
-    width: 15em;
+    width: 100%;
+
     .sweetTitle {
       order: 2;
       color: #ffffff;
       font-weight: 900;
       text-transform: uppercase;
       font-size: 2em;
-      line-height: 0.75em;
+      line-height: 1em;
       text-align: center;
       text-shadow: black;
-
+      width: 8em;
+      margin-bottom: 2em;
       p {
         display: block;
         position: relative;
@@ -50,7 +52,7 @@
         }
 
         &:nth-child(1) {
-          padding-right: 2.25rem;
+          padding-right: 10.25rem;
         }
 
         &:nth-child(2) {
@@ -63,29 +65,27 @@
     top: -5em;
     left: -6em;
     width: 22em;
-    .showResult {
-      margin-left: 9em;
-      margin-bottom: 1.5em;
+    .sweetTitle {
+      float: right;
     }
   }
   .girl {
     top: -5em;
     right: -5em;
     width: 21em;
-    .showResult {
-      margin-left: 2em;
-      margin-bottom: 1em;
+    .sweetTitle {
+      float: left;
     }
   }
   .jackpot {
-    top: -6.5em;
+    top: -5.5em;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
     width: 15em;
 
     .content {
-      margin-top: -8em;
+      margin-top: -6em;
       color: white;
     }
   }
@@ -95,6 +95,7 @@
     font-weight: bold;
   }
   .growthArea {
+    cursor: pointer;
     padding: 5px;
     background-color: #d17541;
     border-radius: 15px;

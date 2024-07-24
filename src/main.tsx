@@ -25,29 +25,29 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <AppProvider>
             <GlobalStyles>
               <ConfigProvider
-                button={{ className: 'buttonPrimary' }}
+                // button={{ className: 'buttonPrimary' }}
                 theme={{
                   token: {
-                    colorPrimary: '#4862FF',
-                    colorPrimaryActive: '#5f76f5',
-                    colorPrimaryBorder: '#4862FF',
-                    colorPrimaryHover: '#5f76f5',
-                    colorTextPlaceholder: '#939393',
-                    colorInfo: '#1EA69A',
-                    colorBorder: '#D9D9D9',
-                    paddingContentHorizontal: 14,
-                    colorLink: 'black',
-                    colorLinkActive: '#5f76f5',
-                    colorLinkHover: '#5f76f5',
-                    borderRadius: 4,
-                    borderRadiusLG: 4,
-                    borderRadiusOuter: 8,
-                    borderRadiusSM: 8,
-                    borderRadiusXS: 8,
-                    controlOutlineWidth: 1,
-                    // colorSplit: '#4862FF',
-                    colorBorderSecondary: '#E5E7E8',
-                    colorBgLayout: 'white'
+                    // colorPrimary: '#4862FF',
+                    // colorPrimaryActive: '#5f76f5',
+                    // colorPrimaryBorder: '#4862FF',
+                    // colorPrimaryHover: '#5f76f5',
+                    // colorTextPlaceholder: '#939393',
+                    // colorInfo: '#1EA69A',
+                    // colorBorder: '#D9D9D9',
+                    // paddingContentHorizontal: 14,
+                    // colorLink: 'black',
+                    // colorLinkActive: '#5f76f5',
+                    // colorLinkHover: '#5f76f5',
+                    // borderRadius: 4,
+                    // borderRadiusLG: 4,
+                    // borderRadiusOuter: 8,
+                    // borderRadiusSM: 8,
+                    // borderRadiusXS: 8,
+                    // controlOutlineWidth: 1,
+                    // // colorSplit: '#4862FF',
+                    // colorBorderSecondary: '#E5E7E8',
+                    // colorBgLayout: 'white'
                   },
                   components: {
                     Layout: {

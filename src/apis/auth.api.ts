@@ -10,8 +10,8 @@ const authApi = {
   signup(body: UserState) {
     return http.post<UserState>(ENDPOINT.REGISTER, body)
   },
-  logout() {
-    return http.post(ENDPOINT.LOGOUT)
+  logout(id: string) {
+    return http.get(ENDPOINT.LOGOUT + id)
   }
 }
 

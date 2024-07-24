@@ -1,0 +1,22 @@
+.historyMain {
+  .red,
+  .draw,
+  .blue {
+    padding: 5px 12px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    color: white;
+  }
+  .red {
+    background-color: #d30707;
+  }
+  .draw {
+    background-color: #303030;
+  }
+  .blue {
+    background-color: #0244a8;
+  }
+}

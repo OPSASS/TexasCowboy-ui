@@ -6,6 +6,7 @@ export interface HistoriesState {
   updatedAt: Date
   gameId: string
   gameHistory: GameHistory
+  totalCoin: number
 }
 
 export interface GameHistory {

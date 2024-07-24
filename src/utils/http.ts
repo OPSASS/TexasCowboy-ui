@@ -21,8 +21,13 @@ const setAccessToken = (token: string | null) => {
 
 // Hàm để thực hiện refresh token
 const refreshToken = async (): Promise<string | null> => {
-  const newAccessToken = localStorage.getItem('rff636edtg7rf1')
+  const refreshToken = localStorage.getItem('rff636edtg7rf1')
+  const response = await html.get('/auth/refresh-token?token=' + refreshToken)
+  const newAccessToken = response.data.accessToken
+  const newRefreshToken = response.data.refreshToken
+
   setAccessToken(newAccessToken)
+  localStorage.setItem('rff636edtg7rf1', newRefreshToken)
   return newAccessToken
 }
 

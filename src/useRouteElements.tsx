@@ -5,7 +5,9 @@ import LayoutComponent from './components/Layout/Layout'
 import PageResult from './components/PageResult'
 import PATH from './constants/path'
 import { AppContext } from './contexts/app.context'
+import ForgotPassword from './pages/AuthPage/ForgotPassword/ForgotPassword'
 import Login from './pages/AuthPage/Login/Login'
+import Register from './pages/AuthPage/Register/Register'
 import BusinessAndStrategy from './pages/Game/BusinessAndStrategy'
 import TexasCowboyPage from './pages/Game/TexasCowboyPage'
 import HomePage from './pages/HomePage/HomePage'
@@ -92,6 +94,14 @@ export default function useRouteElements() {
         {
           path: PATH.LOGIN,
           element: <Login />
+        },
+        {
+          path: PATH.REGISTER,
+          element: <Register />
+        },
+        {
+          path: PATH.FORGOT_PASSWORD,
+          element: <ForgotPassword />
         }
       ]
     },
