@@ -82,8 +82,6 @@ const Nav = () => {
       key: '2'
     })
 
-  console.log(gameHistory)
-
   return (
     <Container size='lg' className={style.navBody}>
       <nav className={style.navMain}>

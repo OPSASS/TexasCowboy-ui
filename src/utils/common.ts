@@ -287,8 +287,12 @@ export const debounce = (func: any, timeout = 500) => {
   }
 }
 
-export function formatNumber(num: number) {
+export const formatNumberToString = (num: number) => {
   const formatter = new Intl.NumberFormat('vi-VN')
+  return formatter.format(num)
+}
+
+export const formatNumber = (num: number) => {
   if (num >= 1000000000) {
     let formattedNum = Math.floor((num / 1000000000) * 10) / 10
     return formattedNum + 'B'
@@ -299,6 +303,6 @@ export function formatNumber(num: number) {
     let formattedNum = Math.floor((num / 1000) * 10) / 10
     return formattedNum + 'K'
   } else {
-    return formatter.format(num)
+    return formatNumberToString(num)
   }
 }

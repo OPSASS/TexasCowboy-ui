@@ -1,0 +1,108 @@
+.versusContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+.player1Name,
+.player2Name {
+  color: white;
+  font-weight: bold;
+  font-size: 50px;
+  position: absolute;
+  z-index: 15;
+}
+.player1,
+.player2 {
+  font-size: 50px;
+  position: absolute;
+  width: 46.75%;
+  height: 15%;
+  animation: bounce cubic-bezier(0.83, 0, 0.17, 1);
+  -webkit-animation: bounce cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.player1 {
+  &::before {
+    content: attr(data-text);
+    position: absolute;
+    color: red;
+    z-index: 1;
+    right: 10px;
+    top: 20px;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 1;
+  }
+  ::after {
+    content: attr(name-text);
+    position: absolute;
+    color: red;
+    z-index: 2;
+    right: 10px;
+    top: 20px;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 1;
+  }
+  background-color: rgba(0, 0, 255, 0.5);
+  animation-name: bounce-left;
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+  transform: translateX(-100%) scale(0);
+}
+
+.player2 {
+  &::before {
+    content: attr(data-text);
+    position: absolute;
+    color: blue;
+    z-index: 2;
+    left: 16px;
+    bottom: 15px;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 1;
+  }
+  ::after {
+    content: attr(name-text);
+    position: absolute;
+    color: blue;
+    z-index: 1;
+    left: 16px;
+    bottom: 15px;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 1;
+  }
+  background-color: rgba(255, 0, 0, 0.5);
+  animation-name: bounce-right;
+  clip-path: polygon(5% 0, 100% 0%, 100% 100%, 0% 100%);
+  right: 0;
+  transform: translateX(100%) scale(0);
+}
+
+@keyframes bounce-left {
+  15% {
+    transform: translateX(0) scale(1.2);
+  }
+  90% {
+    transform: translateX(0) scale(1.2);
+  }
+  100% {
+    transform: translateX(-100%) scale(0);
+  }
+}
+
+@keyframes bounce-right {
+  15% {
+    transform: translateX(0) scale(1.2);
+  }
+  90% {
+    transform: translateX(0) scale(1.2);
+  }
+  100% {
+    transform: translateX(100%) scale(0);
+  }
+}

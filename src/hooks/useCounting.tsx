@@ -1,3 +1,4 @@
+import { formatNumberToString } from '@/utils/common'
 import { useEffect, useRef, useState } from 'react'
 const useCounting = (startNumber: number, endNumber: number, duration: number, delay: number) => {
   const [count, setCount] = useState(startNumber || 0)
@@ -58,7 +59,7 @@ const useCounting = (startNumber: number, endNumber: number, duration: number, d
     }
   }, [startNumber, endNumber, duration, delay])
 
-  return count
+  return formatNumberToString(count)
 }
 
 export default useCounting
