@@ -9,7 +9,8 @@ export const PATH = {
   TEXAS_COWBOY: '/games/texas-cowboy',
   BUSINESS_AND_STRATEGY: '/games/business-and-strategy',
   TRANSACTION_HISTORY: '/transaction-history',
-  RECHARGE: '/recharge'
+  RECHARGE: '/recharge',
+  PAYMENT_CALLBACK: '/payment-callback'
 }
 
 export default PATH

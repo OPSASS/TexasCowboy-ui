@@ -1,3 +1,4 @@
+import { LeftOutlined } from '@ant-design/icons'
 import { Layout } from 'antd'
 import { Link } from 'react-router-dom'
 import css from './Container.module.scss'
@@ -5,7 +6,6 @@ type Props = {
   background?: string
   backgroundTitle?: string
   backgroundUrl?: string
-  boxLink?: boolean
   children: React.ReactNode
   className?: string
   desc?: string | React.ReactNode
@@ -20,11 +20,10 @@ type Props = {
   style?: React.CSSProperties
   styleChild?: React.CSSProperties
   title?: string | React.ReactNode
-  titleGoBack?: string
+  titleGoBack?: boolean
   titleHref?: string
   titleSize?: number
   titleStyle?: React.CSSProperties
-  titleTextLink?: string
   titleTextSecond?: string
 }
 
@@ -33,7 +32,6 @@ const Container = (props: Props) => {
     background,
     backgroundTitle,
     backgroundUrl,
-    boxLink = true,
     children,
     className,
     desc,
@@ -52,7 +50,6 @@ const Container = (props: Props) => {
     titleHref,
     titleSize,
     titleStyle,
-    titleTextLink,
     titleTextSecond
   } = props
 
@@ -87,7 +84,16 @@ const Container = (props: Props) => {
           className={css.typo}
         >
           {header && <div className={css.header}>{header}</div>}
-          {title && (
+          {title && titleGoBack ? (
+            <div className={css.title} style={{ fontSize: titleSize, ...titleStyle }}>
+              <div>
+                <Link to={`${titleHref || '/'}`}>
+                  <LeftOutlined />
+                </Link>
+                {title}
+              </div>
+            </div>
+          ) : (
             <div className={css.title} style={{ fontSize: titleSize, ...titleStyle }}>
               <div>{title}</div>
             </div>
@@ -98,22 +104,8 @@ const Container = (props: Props) => {
             </div>
           )}
         </div>
-        {titleGoBack && (
-          <div className={css.title} style={{ fontSize: titleSize, ...titleStyle }}>
-            {titleGoBack}
-          </div>
-        )}
-        <div className={css.titleSecond}>
-          {titleTextLink && (
-            <span>
-              {boxLink && '「'}
-              {<Link to={`${titleHref || '/'}`}>{titleTextLink}</Link>}
-              {boxLink && '」'}
-            </span>
-          )}
-          {titleTextSecond && <span>{titleTextSecond}</span>}
-        </div>
 
+        <div className={css.titleSecond}>{titleTextSecond && <span>{titleTextSecond}</span>}</div>
         {children}
       </div>
     </Header>

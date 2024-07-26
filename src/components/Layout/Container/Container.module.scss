@@ -3,7 +3,6 @@
 .headerMain {
   position: relative;
   .typo {
-    text-align: center;
     .header {
       margin-bottom: 25px;
     }
@@ -21,18 +20,14 @@
       }
     }
     .title {
-      font-size: 30px;
+      font-size: 22px;
       font-weight: 700;
-      margin-bottom: 50px;
+      margin-bottom: 16px;
       @include respond-to(xl) {
-        font-size: 50px;
+        font-size: 25px;
       }
       @include respond-to(xxl) {
-        font-size: 50px;
-      }
-      & > * {
-        max-width: 788px;
-        margin: 0 auto;
+        font-size: 25px;
       }
     }
   }

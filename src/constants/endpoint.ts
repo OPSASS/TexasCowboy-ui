@@ -17,6 +17,10 @@ export const ENDPOINT = {
   WALLET_PATH: '/wallet/',
   FIND_WALLET_PATH: '/wallet/find',
 
+  // :::::::::::::::::::: CHECKOUT PATH :::::::::::::::::::::
+  CHECKOUT_PATH: '/vnpay/checkout',
+  VNP_CALLBACK_PATH: '/vnpay/payment-callback',
+
   // :::::::::::::::::::: HISTORY PATH :::::::::::::::::::::
   HISTORY_PATH: '/history/',
   FIND_HISTORY_PATH: '/history/find'

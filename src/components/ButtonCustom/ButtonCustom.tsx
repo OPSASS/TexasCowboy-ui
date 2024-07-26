@@ -24,7 +24,7 @@ type Props = {
   loading?: boolean
   width?: number | string
   fullWidth?: boolean
-  align?: 'start' | 'end' | 'center'
+  justify?: React.CSSProperties['justifyContent']
   onClick?: () => void
 }
 
@@ -52,7 +52,7 @@ const ButtonCustom = (props: Props) => {
     loading,
     width,
     fullWidth,
-    align = 'center',
+    justify = 'center',
     onClick
   } = props
 
@@ -83,8 +83,8 @@ const ButtonCustom = (props: Props) => {
           loading={loading}
         >
           {!loading && (
-            <Flex align='center' justify={align} gap={5}>
-              {icon && icon} {children && <div>{children}</div>}
+            <Flex align='center' justify={justify} gap={5}>
+              {icon && icon} {children && <div style={{ width: fullWidth ? '100%' : 'auto' }}>{children}</div>}
             </Flex>
           )}
         </Button>
@@ -111,8 +111,8 @@ const ButtonCustom = (props: Props) => {
             danger={danger}
           >
             {!loading && (
-              <Flex align='center' justify={align} gap={5}>
-                {icon && icon} {children && <div>{children}</div>}
+              <Flex align='center' justify={justify} gap={5}>
+                {icon && icon} {children && <div style={{ width: fullWidth ? '100%' : 'auto' }}>{children}</div>}
               </Flex>
             )}
           </Button>
@@ -140,8 +140,8 @@ const ButtonCustom = (props: Props) => {
         loading={loading}
       >
         {!loading && (
-          <Flex align='center' justify={align} gap={5}>
-            {icon && icon} {children && <div>{children}</div>}
+          <Flex align='center' justify={justify} gap={5}>
+            {icon && icon} {children && <div style={{ width: fullWidth ? '100%' : 'auto' }}>{children}</div>}
           </Flex>
         )}
       </Button>

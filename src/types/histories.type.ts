@@ -1,7 +1,7 @@
 export interface HistoriesState {
   _id: string
   _destroy: boolean
-  gameModal: string
+  targetModel: string
   createdAt: Date
   updatedAt: Date
   gameId: string

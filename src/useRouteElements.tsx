@@ -11,6 +11,8 @@ import Register from './pages/AuthPage/Register/Register'
 import BusinessAndStrategy from './pages/Game/BusinessAndStrategy'
 import TexasCowboyPage from './pages/Game/TexasCowboyPage'
 import HomePage from './pages/HomePage/HomePage'
+import PaymetCallBackPage from './pages/PaymetCallBackPage/PaymetCallBackPage'
+import RechargePage from './pages/RechargePage/RechargePage'
 
 const checkAuth = () => {
   const { isAuthenticated } = useContext(AppContext)
@@ -107,8 +109,19 @@ export default function useRouteElements() {
     },
     {
       children: [
+        {
+          path: PATH.RECHARGE,
+          element: <RechargePage />
+        },
+        {
+          path: PATH.PAYMENT_CALLBACK,
+          element: <PaymetCallBackPage />
+        },
         { path: '/404', element: <PageResult code={404} /> },
-        { path: '/403', element: <PageResult code={403} desc='このページにアクセスできません' /> },
+        {
+          path: '/403',
+          element: <PageResult code={403} desc='This page cannot be accessed' />
+        },
         { path: '*', element: <PageResult code={404} /> }
       ]
     }

@@ -1,0 +1,12 @@
+.rechargeBody {
+  .button {
+    height: auto;
+    justify-content: flex-start;
+    & > * {
+      width: 100%;
+    }
+    .bonus {
+      font-size: 12px;
+    }
+  }
+}

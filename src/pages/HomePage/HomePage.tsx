@@ -1,7 +1,9 @@
 import PATH from '@/constants/path'
 import { Navigate } from 'react-router-dom'
 
-export default function HomePage() {
+type Props = {}
+
+const HomePage = (props: Props) => {
   return <Navigate to={PATH.TEXAS_COWBOY} />
   // return (
   //   <p>
@@ -13,3 +15,5 @@ export default function HomePage() {
   //   </p>
   // )
 }
+
+export default HomePage

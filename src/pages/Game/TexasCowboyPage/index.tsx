@@ -8,7 +8,6 @@ import CountDownTimer from '@/components/CountDown'
 import Container from '@/components/Layout/Container/Container'
 import RenderDot from '@/components/RenderDot'
 import { AppContext } from '@/contexts/app.context'
-import useCounting from '@/hooks/useCounting'
 import { HistoriesState } from '@/types/histories.type'
 import { BettingState, PokerState } from '@/types/poker.type'
 import { RightOutlined, RiseOutlined } from '@ant-design/icons'
@@ -24,8 +23,8 @@ import VensusScreen from './Components/VensusScreen'
 import style from './styles.module.scss'
 
 const TexasCowboyPage = () => {
-  const queryClient = useQueryClient()
   const { bettingData, profile, setBettingData, setCoinAdd } = useContext(AppContext)
+  const queryClient = useQueryClient()
   const initCards = { player1: [0, 0], player2: [0, 0], dealer: [0, 0, 0, 0, 0] }
   const [turn, setTurn] = useState<PokerState>(initCards)
   const [historyData, setHistoryData] = useState<HistoriesState>()
@@ -42,7 +41,7 @@ const TexasCowboyPage = () => {
   const { data } = useQuery({
     queryKey: ['historyData'],
     queryFn: () => {
-      return historyApi.find({ gameModal: 'TEXAS_COWBOY' }, { limit: 1, sort: { updatedAt: -1 } })
+      return historyApi.find({ targetModel: 'TEXAS_COWBOY' }, { limit: 1, sort: { updatedAt: -1 } })
     }
   })
 
@@ -140,7 +139,8 @@ const TexasCowboyPage = () => {
                 <img src={jackpot} alt='jackpot' />
                 <div className={style.content}>
                   <p>Jackpot</p>
-                  <h2>{useCounting(3454112, 3454112 + 3000, 2000, 0)}</h2>
+                  {/* <h2>{useCounting(3454112, 3454112 + 3000, 2000, 0)}</h2> */}
+                  <h2>3.454.112</h2>
                 </div>
               </div>
               <div
@@ -351,6 +351,7 @@ const TexasCowboyPage = () => {
             }}
             type={play ? 'default' : 'primary'}
             danger={play}
+            disabled={!showResult && play}
           >
             {play ? 'Stop' : 'Play'}
           </ButtonCustom>

@@ -6,3 +6,10 @@ export interface WalletState {
   createdAt: string
   updatedAt: string
 }
+
+export interface CheckoutState {
+  coin: number
+  targetModel: string
+  userId: string
+  url?: string
+}

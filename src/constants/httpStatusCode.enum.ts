@@ -24,7 +24,7 @@ enum HttpStatusCode {
   PermanentRedirect = 308,
   BadRequest = 400,
   Unauthorized = 401,
-  PaymentRequired = 402,
+  CHECKOUTRequired = 402,
   Forbidden = 403,
   NotFound = 404,
   MethodNotAllowed = 405,

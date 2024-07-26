@@ -36,7 +36,7 @@ const Nav = () => {
   const { data: gameHistory } = useQuery({
     queryKey: ['gameHistory'],
     queryFn: () => {
-      return historyApi.find({ gameModal: 'BET', userId: profile._id }, { limit: 20, sort: { createdAt: -1 } })
+      return historyApi.find({ targetModel: 'BET', userId: profile._id }, { limit: 20, sort: { createdAt: -1 } })
     },
     enabled: openHistory
   })
