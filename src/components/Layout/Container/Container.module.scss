@@ -2,7 +2,25 @@
 
 .headerMain {
   position: relative;
+  .imgBG {
+    height: 100%;
+    @include respond-to(xl) {
+      height: auto;
+    }
+    @include respond-to(xxl) {
+      height: auto;
+    }
+  }
   .typo {
+    @include respond-to(sm) {
+      margin-top: 10px;
+    }
+    @include respond-to(xs) {
+      margin-top: 10px;
+    }
+    @include respond-to(md) {
+      margin-top: 10px;
+    }
     .header {
       margin-bottom: 25px;
     }
@@ -22,7 +40,7 @@
     .title {
       font-size: 22px;
       font-weight: 700;
-      margin-bottom: 16px;
+
       @include respond-to(xl) {
         font-size: 25px;
       }

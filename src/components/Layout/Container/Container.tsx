@@ -1,5 +1,5 @@
 import { LeftOutlined } from '@ant-design/icons'
-import { Layout } from 'antd'
+import { Flex, Layout } from 'antd'
 import { Link } from 'react-router-dom'
 import css from './Container.module.scss'
 type Props = {
@@ -25,6 +25,7 @@ type Props = {
   titleSize?: number
   titleStyle?: React.CSSProperties
   titleTextSecond?: string
+  rightTitle?: React.ReactNode
 }
 
 const Container = (props: Props) => {
@@ -50,7 +51,8 @@ const Container = (props: Props) => {
     titleHref,
     titleSize,
     titleStyle,
-    titleTextSecond
+    titleTextSecond,
+    rightTitle
   } = props
 
   const Header = Layout
@@ -69,6 +71,7 @@ const Container = (props: Props) => {
           src={backgroundUrl}
           alt='bg-container'
           style={{ width: '100%', height: heightImg, objectFit: 'cover', ...imgStyle }}
+          className={css.imgBG}
         />
       )}
       <div
@@ -84,19 +87,27 @@ const Container = (props: Props) => {
           className={css.typo}
         >
           {header && <div className={css.header}>{header}</div>}
-          {title && titleGoBack ? (
-            <div className={css.title} style={{ fontSize: titleSize, ...titleStyle }}>
-              <div>
-                <Link to={`${titleHref || '/'}`}>
-                  <LeftOutlined />
-                </Link>
-                {title}
-              </div>
-            </div>
-          ) : (
-            <div className={css.title} style={{ fontSize: titleSize, ...titleStyle }}>
-              <div>{title}</div>
-            </div>
+          {title && (
+            <Flex justify='space-between' align='center'>
+              {titleGoBack ? (
+                <>
+                  <div className={css.title} style={{ fontSize: titleSize, ...titleStyle }}>
+                    <Link to={`${titleHref || '/'}`}>
+                      <LeftOutlined />
+                    </Link>
+                    {title}
+                  </div>
+                  {rightTitle}
+                </>
+              ) : (
+                <>
+                  <div className={css.title} style={{ fontSize: titleSize, ...titleStyle }}>
+                    {title}
+                  </div>
+                  {rightTitle}
+                </>
+              )}
+            </Flex>
           )}
           {desc && (
             <div className={css.desc} style={{ fontSize: descSize, width: descWidth }}>

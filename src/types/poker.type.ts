@@ -20,6 +20,7 @@ export interface BettingState {
   gameId: string
   detailedHistory: BettingDataState[]
   totalCoin?: number
+  oldCoin?: number
   createdAt?: string
   updatedAt?: string
 }

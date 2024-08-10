@@ -112,7 +112,6 @@ const BreadCrumbsDynamic = (props: Props) => {
 
       findLabelsRecursive(index !== -1 ? items[0].items : items, pathArray, undefined)
     }
-    console.log(pathArray)
 
     return <Breadcrumb items={breadCrumbData} separator={separator} />
   }

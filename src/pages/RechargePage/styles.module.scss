@@ -1,4 +1,7 @@
+@import '../../components/GlobalStyles/responsive.scss';
 .rechargeBody {
+  position: relative;
+  height: 100vh;
   .button {
     height: auto;
     justify-content: flex-start;
@@ -7,6 +10,21 @@
     }
     .bonus {
       font-size: 12px;
+    }
+  }
+  .findEmail {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 425px;
+    @include respond-to(xs) {
+      padding: 10px;
+      width: 100%;
+    }
+    @include respond-to(sm) {
+      padding: 10px;
+      width: 100%;
     }
   }
 }

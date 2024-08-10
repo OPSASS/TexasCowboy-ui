@@ -1,4 +1,5 @@
 import { AppContext } from '@/contexts/app.context'
+import useResponsive from '@/hooks/useResponsives'
 import { GameHistory } from '@/types/histories.type'
 import { debounce, formatNumber } from '@/utils/common'
 import { Col, Flex } from 'antd'
@@ -23,6 +24,7 @@ type Props = {
 const BetArea = (props: Props) => {
   const { checkKey, col = 8, content, countKey, data, showWin = false, disabled = false, valuation } = props
   const { bettingValue, bettingData, userWallet, setBettingData, setUserWallet } = useContext(AppContext)
+  const { xs } = useResponsive()
 
   const betting = bettingData.find((v) => v.key === checkKey)
   const handleBetting = () => {
@@ -58,18 +60,20 @@ const BetArea = (props: Props) => {
     >
       <ButtonCustom className={style.bettingButton} onClick={debounce(() => handleBetting(), 50)}>
         <Flex vertical gap={15}>
-          <p className={`${style.content} dangerHTMLTwoLine`}>{content}</p>
-          <Flex vertical gap={3}>
+          <p className={`${style.content} ${xs ? 'dangerHTMLThreeLine' : 'dangerHTMLTwoLine'}`}>{content}</p>
+          <Flex vertical gap={xs ? 2 : 3}>
             <p className={style.valuation}>{valuation}</p>
             {betting && betting.coin !== 0 && <div className={style.bettingValue}>{formatNumber(betting.coin)}</div>}
-            <Flex gap={5} justify='center'>
+            <Flex gap={xs ? 3 : 5} justify='center'>
               <div className={style.showWin}>
                 {showWin && data?.[checkKey]?.at(-1) && <img src={winstiker} alt='win' />}
               </div>
               {data?.[countKey] > (col === 8 ? 12 : 25) ? (
                 <p className={style.showCount}>{data?.[countKey]} Never out</p>
               ) : (
-                data?.[checkKey]?.map((i: any, id: number) => <RenderDot result={i} key={id + checkKey} />)
+                data?.[checkKey]?.map((i: any, id: number) => (
+                  <RenderDot result={i} key={id + checkKey} size={xs ? 9 : 12} />
+                ))
               )}
             </Flex>
           </Flex>

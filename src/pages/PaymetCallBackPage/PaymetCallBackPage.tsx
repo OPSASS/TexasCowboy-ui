@@ -29,7 +29,7 @@ const PaymetCallBackPage = () => {
   const { isSuccess, data } = useQuery({
     queryKey: ['historyData'],
     queryFn: () => {
-      return customApi.VNPCallback(queryParams)
+      return customApi.transactionCallback(queryParams)
     },
     enabled: sendReq
   })
@@ -38,11 +38,18 @@ const PaymetCallBackPage = () => {
     if (isSuccess) {
       navigate('/')
       Notification(
-        'success',
-        <p>
-          You have successfully paid <b>{formatNumber(data.data.coin)}</b> coins, transaction id: <b>{data.data._id}</b>
-        </p>,
-        'Payment successful'
+        data.data.status === 'SUCCESS' ? 'success' : 'error',
+        data.data.status === 'SUCCESS' ? (
+          <p>
+            You have successfully paid <b>{formatNumber(data.data.coin)}</b> coins, transaction id:{' '}
+            <b>{data.data.codeTransaction}</b>
+          </p>
+        ) : (
+          <p>
+            The transaction failed, transaction id: <b>{data.data.codeTransaction}</b>
+          </p>
+        ),
+        `Payment ${data.data.status === 'SUCCESS' ? 'successful' : 'failed'}`
       )
     }
   }, [isSuccess])

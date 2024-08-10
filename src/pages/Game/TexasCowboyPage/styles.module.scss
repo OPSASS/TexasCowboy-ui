@@ -1,135 +1,219 @@
+@import '../../../components/GlobalStyles/responsive.scss';
+
 .table {
-  position: relative;
+  position: fixed;
   inset: 0;
+  left: -75%;
+  width: 250%;
+  height: 100vh;
   margin: 12vh auto 0;
-  width: 100%;
-  height: 85vh;
+  outline: 5px solid #d17541;
+  border: solid 8px #523124;
   background: radial-gradient(circle, #008d2f, #004911 80%);
-  border: solid 15px #523124;
   border-radius: 999em 999em 999em 999em;
-  outline-offset: -22px;
-  outline: 8px solid #d17541;
-  .lose {
-    filter: grayscale(1);
-    -webkit-filter: grayscale(1);
+  outline-offset: -12px;
+  padding: 0 30px;
+  @include respond-to(xl) {
+    position: relative;
+    inset: 0;
+    margin: 12vh auto 0;
+    width: 100%;
+    height: 85vh;
+    outline: 8px solid #d17541;
+    border: solid 15px #523124;
+    outline-offset: -22px;
+    padding: 0;
   }
-  .boy,
-  .girl,
-  .jackpot {
-    position: absolute;
-    z-index: 20;
-    img {
+  .gameArea {
+    position: relative;
+    width: 41%;
+    margin: auto;
+    @include respond-to(xl) {
       width: 100%;
     }
-  }
-  .countDown {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0.5em 0;
-    color: white;
-    margin: 0 auto;
-    text-align: center;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65) 15% 85%, rgba(0, 0, 0, 0));
-  }
-  .showResult {
-    position: absolute;
-    bottom: 0;
-    z-index: 10;
-    width: 100%;
+    .lose {
+      filter: grayscale(1);
+      -webkit-filter: grayscale(1);
+    }
 
-    .sweetTitle {
-      order: 2;
-      color: #ffffff;
-      font-weight: 900;
-      text-transform: uppercase;
-      font-size: 2em;
-      line-height: 1em;
-      text-align: center;
-      text-shadow: black;
-      width: 8em;
-      margin-bottom: 2em;
-      p {
-        display: block;
-        position: relative;
-
-        &:before {
-          content: attr(data-text);
-          position: absolute;
-          text-shadow: 2px 2px 1px #af7c06, -1px -1px 1px #fff024, -2px 2px 1px #e0b509, 1px -1px 1px #f2b203;
-          z-index: 1;
-        }
-
-        &:nth-child(1) {
-          padding-right: 10.25rem;
-        }
-
-        &:nth-child(2) {
-          padding-left: 2.25rem;
+    .jackpot {
+      position: absolute;
+      z-index: 20;
+      img {
+        width: 80%;
+        @include respond-to(xl) {
+          width: 100%;
         }
       }
     }
-  }
-  .boy {
-    top: -5em;
-    left: -6em;
-    width: 22em;
-    .sweetTitle {
-      float: right;
-    }
-  }
-  .girl {
-    top: -5em;
-    right: -5em;
-    width: 21em;
-    .sweetTitle {
-      float: left;
-    }
-  }
-  .jackpot {
-    top: -5.5em;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    width: 15em;
 
-    .content {
-      margin-top: -6em;
+    .boy,
+    .girl {
+      position: absolute;
+      z-index: 20;
+      width: 35%;
+      img {
+        width: 100%;
+      }
+
+      @include respond-to(xl) {
+        width: 100%;
+      }
+    }
+
+    .boy {
+      top: -3em;
+      left: -2em;
+      @include respond-to(xl) {
+        top: -5em;
+        left: -6em;
+        width: 22em;
+      }
+      .sweetTitle {
+        float: right;
+      }
+    }
+    .girl {
+      top: -3em;
+      right: -2em;
+      @include respond-to(xl) {
+        top: -5em;
+        right: -5em;
+        width: 21em;
+      }
+      .sweetTitle {
+        float: left;
+      }
+    }
+    .jackpot {
+      width: 13em;
+      top: -3.7em;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      .content {
+        line-height: 1;
+        margin-top: -4em;
+        color: white;
+        p {
+          font-size: 12px;
+        }
+        h2 {
+          font-size: 16px;
+        }
+      }
+
+      @include respond-to(xl) {
+        width: 15em;
+        top: -5.5em;
+        .content {
+          line-height: 1.4;
+          margin-top: -6em;
+          color: white;
+          p {
+            font-size: 14px;
+          }
+          h2 {
+            font-size: 22px;
+          }
+        }
+      }
+    }
+
+    .contentColor {
+      margin-top: 0.1em;
       color: white;
+      font-weight: bold;
+      font-size: 10px;
+      @include respond-to(xl) {
+        margin-top: 0.5em;
+        font-size: 14px;
+      }
     }
-  }
-  .contentColor {
-    margin-top: 0.5em;
-    color: white;
-    font-weight: bold;
-  }
-  .growthArea {
-    cursor: pointer;
-    padding: 5px;
-    background-color: #d17541;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
-    .growthBody {
-      border-radius: 10px;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      -ms-border-radius: 10px;
-      -o-border-radius: 10px;
+    .growthArea {
+      cursor: pointer;
+      padding: 5px;
+      background-color: #d17541;
+      border-radius: 15px;
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      -ms-border-radius: 15px;
+      -o-border-radius: 15px;
+      .growthBody {
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+      }
     }
-  }
-  .bettingArea {
-    background-color: #b16d00;
-    margin-top: 20px;
-    padding: 6px;
-    width: 66%;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+    .bettingArea {
+      background-color: #b16d00;
+      margin-top: 5px;
+      width: 100%;
+      padding: 3px;
+      border-radius: 5px;
+
+      @include respond-to(xl) {
+        width: 66%;
+        margin-top: 20px;
+        padding: 6px;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+      }
+    }
+
+    .countDown {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.5em 0;
+      color: white;
+      margin: 0 auto;
+      text-align: center;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65) 15% 85%, rgba(0, 0, 0, 0));
+    }
+    .showResult {
+      position: absolute;
+      bottom: 0;
+      z-index: 10;
+      width: 100%;
+
+      .sweetTitle {
+        order: 2;
+        color: #ffffff;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 2em;
+        line-height: 1em;
+        text-align: center;
+        text-shadow: black;
+        width: 8em;
+        margin-bottom: 2em;
+        p {
+          display: block;
+          position: relative;
+
+          &:before {
+            content: attr(data-text);
+            position: absolute;
+            text-shadow: 2px 2px 1px #af7c06, -1px -1px 1px #fff024, -2px 2px 1px #e0b509, 1px -1px 1px #f2b203;
+            z-index: 1;
+          }
+
+          &:nth-child(1) {
+            padding-right: 10.25rem;
+          }
+
+          &:nth-child(2) {
+            padding-left: 2.25rem;
+          }
+        }
+      }
+    }
   }
 }

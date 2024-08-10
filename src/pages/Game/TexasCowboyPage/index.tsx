@@ -8,6 +8,7 @@ import CountDownTimer from '@/components/CountDown'
 import Container from '@/components/Layout/Container/Container'
 import RenderDot from '@/components/RenderDot'
 import { AppContext } from '@/contexts/app.context'
+import useResponsive from '@/hooks/useResponsives'
 import { HistoriesState } from '@/types/histories.type'
 import { BettingState, PokerState } from '@/types/poker.type'
 import { RightOutlined, RiseOutlined } from '@ant-design/icons'
@@ -23,8 +24,9 @@ import VensusScreen from './Components/VensusScreen'
 import style from './styles.module.scss'
 
 const TexasCowboyPage = () => {
-  const { bettingData, profile, setBettingData, setCoinAdd } = useContext(AppContext)
+  const { bettingData, profile, userWallet, setBettingData, setCoinAdd } = useContext(AppContext)
   const queryClient = useQueryClient()
+  const { sm } = useResponsive()
   const initCards = { player1: [0, 0], player2: [0, 0], dealer: [0, 0, 0, 0, 0] }
   const [turn, setTurn] = useState<PokerState>(initCards)
   const [historyData, setHistoryData] = useState<HistoriesState>()
@@ -54,7 +56,7 @@ const TexasCowboyPage = () => {
     mutationKey: ['bettingMutation'],
     onSuccess(data) {
       setTimeout(() => {
-        setCoinAdd(data.data.totalCoin!)
+        setCoinAdd(data.data.oldCoin! - userWallet + data.data.totalCoin!)
         setTimeout(() => {
           queryClient.invalidateQueries({ queryKey: ['userWallet'] })
         }, 700)
@@ -119,7 +121,7 @@ const TexasCowboyPage = () => {
       {isPlay && <VensusScreen duration={1.8} />}
       <Container size='sm' backgroundUrl={bgTx} imgStyle={{ position: 'fixed' }}>
         <div className={style.table}>
-          <Flex justify='space-between' align='center' vertical>
+          <Flex justify='space-between' align='center' vertical className={style.gameArea}>
             <Flex justify='space-between'>
               <div
                 className={`${style.boy} ${
@@ -158,7 +160,7 @@ const TexasCowboyPage = () => {
                 </div>
               </div>
             </Flex>
-            <Row gutter={[24, 24]} align='bottom' style={{ marginTop: 40 }}>
+            <Row gutter={sm ? [3, 3] : [24, 24]} align={sm ? 'top' : 'bottom'} style={{ marginTop: sm ? '8vh' : 40 }}>
               <Col span={6}>
                 <Flex justify='space-between' gap={6}>
                   {turn.player1.map((c, id) => (
@@ -167,17 +169,17 @@ const TexasCowboyPage = () => {
                       cardNumber={c}
                       delay={id === 0 ? 1700 : 0}
                       timer={id === 1 ? 10000 : turnTime - 2000}
-                      cardSize={9}
+                      cardSize={sm ? 4 : 9}
                     />
                   ))}
                 </Flex>
               </Col>
               <Col span={12}>
-                <Flex vertical justify='center' align='center' gap={6}>
+                <Flex vertical justify='center' align='center' gap={sm ? 0 : 6}>
                   <div className={style.growthArea} onClick={() => setOpenHistory(true)}>
                     <div className={style.growthBody}>
-                      <Flex gap={5} justify='center'>
-                        <RiseOutlined style={{ fontSize: 10, color: 'white' }} />
+                      <Flex gap={sm ? 3 : 5} justify='center'>
+                        <RiseOutlined style={{ fontSize: sm ? 8 : 10, color: 'white' }} />
                         {historyData?.gameHistory?.playerHistory?.slice(-10).map((p, id) => (
                           <RenderDot
                             result={
@@ -186,16 +188,16 @@ const TexasCowboyPage = () => {
                               undefined
                             }
                             key={'rs' + id}
-                            size={10}
+                            size={sm ? 8 : 10}
                           />
                         ))}
-                        <RightOutlined style={{ fontSize: 10, color: 'white' }} />
+                        <RightOutlined style={{ fontSize: sm ? 8 : 10, color: 'white' }} />
                       </Flex>
                     </div>
                   </div>
-                  <Flex justify='space-between' gap={6}>
+                  <Flex justify='space-between' gap={6} style={{ marginTop: sm ? '6vh' : 0 }}>
                     {turn.dealer.map((c, id) => (
-                      <CardRender key={'dl' + id} cardNumber={c} cardSize={7} delay={1000 + 100 * (id + 1)} /> //1500
+                      <CardRender key={'dl' + id} cardNumber={c} delay={1000 + 100 * (id + 1)} cardSize={sm ? 5 : 7} /> //1500
                     ))}
                   </Flex>
                   {startBetting && (
@@ -216,14 +218,14 @@ const TexasCowboyPage = () => {
                       cardNumber={c}
                       delay={id === 0 ? 1700 + 300 : 300}
                       timer={id === 1 ? 9700 : turnTime - 2300}
-                      cardSize={9}
+                      cardSize={sm ? 4 : 9}
                     />
                   ))}
                 </Flex>
               </Col>
             </Row>
             <div className={style.bettingArea}>
-              <Row gutter={[6, 6]}>
+              <Row gutter={sm ? [3, 3] : [6, 6]}>
                 <BetArea
                   data={historyData?.gameHistory}
                   content='Blue'

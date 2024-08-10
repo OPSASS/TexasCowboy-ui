@@ -12,4 +12,5 @@ export interface CheckoutState {
   targetModel: string
   userId: string
   url?: string
+  type?: string
 }

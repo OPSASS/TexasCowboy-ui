@@ -4,6 +4,7 @@ import AvatarCustom from '@/components/AvatarCustom/AvatarCustom'
 import ButtonCustom from '@/components/ButtonCustom/ButtonCustom'
 import PATH from '@/constants/path'
 import { AppContext } from '@/contexts/app.context'
+import useResponsive from '@/hooks/useResponsives'
 import BetedHistoryModal from '@/pages/Game/TexasCowboyPage/Components/BetedHistoryModal'
 import { clearLS } from '@/utils/auth'
 import { formatNumber } from '@/utils/common'
@@ -16,7 +17,8 @@ import Container from '../Container/Container'
 import style from './Navigation.module.scss'
 
 const Nav = () => {
-  const { profile, userWallet, coinAdd, setUserWallet } = useContext(AppContext)
+  const { isAuthenticated, profile, userWallet, coinAdd, setUserWallet } = useContext(AppContext)
+  const { sm } = useResponsive()
   const location = useLocation().pathname
   const [openHistory, setOpenHistory] = useState(false)
   const logoutMutation = useMutation({
@@ -62,7 +64,7 @@ const Nav = () => {
     {
       label: (
         <Link to={PATH.HOME}>
-          <h3>{profile.fullName}</h3>
+          <h3>{profile?.fullName}</h3>
         </Link>
       ),
       key: 'fn'
@@ -82,21 +84,44 @@ const Nav = () => {
       key: '2'
     })
 
+  const endPath = location.split('/').filter((item) => item !== '')
+
+  const pathName = endPath
+    ?.slice(-1)?.[0]
+    .split('-')
+    .map((word, index) => (index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word))
+    .join(' ')
+
+  const gamePath = endPath.includes('games')
   return (
-    <Container size='lg' className={style.navBody}>
-      <nav className={style.navMain}>
-        <Flex justify='space-between' align='center'>
+    <Container
+      title={
+        !gamePath ? (
+          pathName
+        ) : (
           <Space>
             <ButtonCustom icon={<MenuOutlined />} size='small' shape='circle'></ButtonCustom>
             <ButtonCustom icon={<SettingFilled />} size='small' shape='circle'></ButtonCustom>
           </Space>
-
-          <Space>
+        )
+      }
+      titleGoBack={!gamePath}
+      titleSize={sm ? 16 : 24}
+      titleHref={!gamePath ? '/' : undefined}
+      className={style.navBody}
+      rightTitle={
+        isAuthenticated && (
+          <Flex gap={sm ? 3 : 10}>
             <div className={style.wallet}>
               <div className={style.coin}>
-                <ButtonCustom size='small' shape='circle' icon={<PlusOutlined />} href={PATH.RECHARGE}></ButtonCustom>
+                <ButtonCustom
+                  size='small'
+                  shape='circle'
+                  icon={<PlusOutlined style={{ fontSize: sm ? 12 : 14 }} />}
+                  href={PATH.RECHARGE}
+                ></ButtonCustom>
                 <Dropdown menu={{ items }} trigger={['click']} arrow placement='bottomRight'>
-                  <ButtonCustom type='link' size='small'>
+                  <ButtonCustom type='link' size='small' fontSize={sm ? 12 : 16}>
                     <h3>${formatNumber(userWallet)}</h3>
                   </ButtonCustom>
                 </Dropdown>
@@ -113,12 +138,13 @@ const Nav = () => {
             </div>
             <Dropdown menu={{ items: menuProfile }} trigger={['click']} arrow placement='bottomRight'>
               <ButtonCustom type='text' size='small'>
-                <AvatarCustom size={40} />
+                <AvatarCustom size={sm ? 30 : 40} />
               </ButtonCustom>
             </Dropdown>
-          </Space>
-        </Flex>
-      </nav>
+          </Flex>
+        )
+      }
+    >
       <BetedHistoryModal isOpen={openHistory} onClose={setOpenHistory} historyData={gameHistory?.data.docs} />
     </Container>
   )

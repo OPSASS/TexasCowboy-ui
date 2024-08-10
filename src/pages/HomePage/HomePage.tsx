@@ -1,9 +1,7 @@
 import PATH from '@/constants/path'
 import { Navigate } from 'react-router-dom'
 
-type Props = {}
-
-const HomePage = (props: Props) => {
+const HomePage = () => {
   return <Navigate to={PATH.TEXAS_COWBOY} />
   // return (
   //   <p>

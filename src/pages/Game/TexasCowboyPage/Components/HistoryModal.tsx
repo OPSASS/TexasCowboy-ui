@@ -15,19 +15,22 @@ const HistoryModal = ({ playerHistory = [], isOpen, onClose }: Props) => {
     <ModalCustom title='History' open={isOpen} setOpen={onClose} footer={null}>
       {playerHistory.length > 0 ? (
         <Row className={style.historyMain} gutter={[12, 12]}>
-          {playerHistory.map((i, id) => (
-            <Col span={24} key={i.rankString + id}>
-              <Flex justify={(i.playerIndex === '0' && 'left') || (i.playerIndex === '1' && 'right') || 'center'}>
-                <div
-                  className={
-                    (i.playerIndex === '0' && style.blue) || (i.playerIndex === '1' && style.red) || style.draw
-                  }
-                >
-                  {i.rankString}
-                </div>
-              </Flex>
-            </Col>
-          ))}
+          {playerHistory
+            .slice()
+            .reverse()
+            .map((i, id) => (
+              <Col span={24} key={i.rankString + id}>
+                <Flex justify={(i.playerIndex === '0' && 'left') || (i.playerIndex === '1' && 'right') || 'center'}>
+                  <div
+                    className={
+                      (i.playerIndex === '0' && style.blue) || (i.playerIndex === '1' && style.red) || style.draw
+                    }
+                  >
+                    {i.rankString}
+                  </div>
+                </Flex>
+              </Col>
+            ))}
         </Row>
       ) : (
         <EmptyCustom />

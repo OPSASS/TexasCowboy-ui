@@ -10,8 +10,11 @@ const customApi = {
   checkout(body: CheckoutState) {
     return http.post<CheckoutState>(ENDPOINT.CHECKOUT_PATH, body)
   },
-  VNPCallback(body: any) {
-    return http.post<any>(ENDPOINT.VNP_CALLBACK_PATH, body)
+  transactionCallback(body: any) {
+    return http.post<any>(ENDPOINT.CALLBACK_PATH, body)
+  },
+  reExecuteTransaction(id: string) {
+    return http.get<any>(ENDPOINT.RE_EXECUTE_TRANSACTION_PATH + id)
   }
 }
 

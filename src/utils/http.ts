@@ -23,6 +23,7 @@ const setAccessToken = (token: string | null) => {
 const refreshToken = async (): Promise<string | null> => {
   const refreshToken = localStorage.getItem('rff636edtg7rf1')
   const response = await html.get('/auth/refresh-token?token=' + refreshToken)
+
   const newAccessToken = response.data.accessToken
   const newRefreshToken = response.data.refreshToken
 
@@ -58,22 +59,24 @@ html.interceptors.response.use(
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
+      if (error.response.data.name === 'JsonWebTokenError') {
+        const newAccessToken = await refreshToken()
 
-      const newAccessToken = await refreshToken()
-
-      if (newAccessToken) {
-        originalRequest.headers.authorization = `Bearer ${newAccessToken.replace(/"/g, '')}`
-        return axios(originalRequest)
+        if (newAccessToken) {
+          originalRequest.headers.authorization = `Bearer ${newAccessToken.replace(/"/g, '')}`
+          return axios(originalRequest)
+        }
       }
     }
 
-    if (error.response && error.response.data && error.response.data) {
+    if (error.response && error.response.data) {
       Notification(
         error.response.status >= 400 ? 'error' : 'warning',
         error.response.data.message || error.response.data.errorMessage,
         error.response.data.type || error.response.data.errorType
       )
-      return Promise.reject(error.response.data || error.response.data)
+
+      return Promise.reject(error.response.data)
     }
 
     return Promise.reject(error)

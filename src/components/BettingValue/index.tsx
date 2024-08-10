@@ -1,11 +1,13 @@
 import { AppContext } from '@/contexts/app.context'
+import useResponsive from '@/hooks/useResponsives'
 import { formatNumber } from '@/utils/common'
-import { Space } from 'antd'
+import { Flex } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import ButtonCustom from '../ButtonCustom/ButtonCustom'
 
 const BettingValue = () => {
   const { userWallet, bettingValue, setBettingValue } = useContext(AppContext)
+  const { xs, md } = useResponsive()
   const initValues = [50, 100, 500, 1000]
   const [values, setValues] = useState<any[]>(initValues)
 
@@ -46,8 +48,8 @@ const BettingValue = () => {
 
   return (
     <div style={{ marginTop: 5, textAlign: 'center' }}>
-      <p style={{ color: 'white' }}>Betting value</p>
-      <Space>
+      <p style={{ color: 'white', fontSize: xs ? 12 : 14 }}>Betting value</p>
+      <Flex gap={md ? 5 : 10} wrap justify='center'>
         {values
           .sort((a, b) => a - b)
           .map((value) => (
@@ -61,13 +63,22 @@ const BettingValue = () => {
           ))}
         <ButtonCustom
           onClick={() => {
+            setBettingValue(userWallet / 2)
+          }}
+          type={userWallet / 2 === bettingValue ? 'primary' : 'default'}
+        >
+          1/2
+        </ButtonCustom>
+        <ButtonCustom
+          onClick={() => {
             setBettingValue(userWallet)
           }}
           danger
+          type={userWallet == bettingValue ? 'primary' : 'default'}
         >
           All in
         </ButtonCustom>
-      </Space>
+      </Flex>
     </div>
   )
 }

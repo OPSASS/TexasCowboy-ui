@@ -1,9 +1,18 @@
+@import '../../GlobalStyles/responsive.scss';
 .authMain {
   height: 100vh;
   width: 100%;
 
   .children {
     position: relative;
-    width: 20vw;
+    width: 425px;
+    @include respond-to(xs) {
+      padding: 10px;
+      width: 100%;
+    }
+    @include respond-to(sm) {
+      padding: 10px;
+      width: 100%;
+    }
   }
 }

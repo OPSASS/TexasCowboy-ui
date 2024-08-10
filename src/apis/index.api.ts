@@ -24,3 +24,8 @@ export const historyApi = createApi<HistoriesState>({
   endpoint: ENDPOINT.HISTORY_PATH,
   findEndpoint: ENDPOINT.FIND_HISTORY_PATH
 })
+
+export const transactionApi = createApi<any>({
+  endpoint: ENDPOINT.TRANSACTION_PATH,
+  findEndpoint: ENDPOINT.FIND_TRANSACTION_PATH
+})

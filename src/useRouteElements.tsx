@@ -13,6 +13,7 @@ import TexasCowboyPage from './pages/Game/TexasCowboyPage'
 import HomePage from './pages/HomePage/HomePage'
 import PaymetCallBackPage from './pages/PaymetCallBackPage/PaymetCallBackPage'
 import RechargePage from './pages/RechargePage/RechargePage'
+import TransactionHistoryPage from './pages/TransactionHistoryPage/TransactionHistoryPage'
 
 const checkAuth = () => {
   const { isAuthenticated } = useContext(AppContext)
@@ -76,6 +77,14 @@ export default function useRouteElements() {
           element: <HomePage />
         },
         {
+          path: PATH.TRANSACTION_HISTORY,
+          element: (
+            <LayoutComponent>
+              <TransactionHistoryPage />
+            </LayoutComponent>
+          )
+        },
+        {
           path: PATH.TEXAS_COWBOY,
           element: (
             <LayoutComponent>
@@ -83,9 +92,14 @@ export default function useRouteElements() {
             </LayoutComponent>
           )
         },
+
         {
           path: PATH.BUSINESS_AND_STRATEGY,
-          element: <BusinessAndStrategy />
+          element: (
+            <LayoutComponent>
+              <BusinessAndStrategy />
+            </LayoutComponent>
+          )
         }
       ]
     },
@@ -111,7 +125,11 @@ export default function useRouteElements() {
       children: [
         {
           path: PATH.RECHARGE,
-          element: <RechargePage />
+          element: (
+            <LayoutComponent>
+              <RechargePage />
+            </LayoutComponent>
+          )
         },
         {
           path: PATH.PAYMENT_CALLBACK,
