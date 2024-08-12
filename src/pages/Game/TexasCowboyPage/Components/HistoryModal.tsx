@@ -20,10 +20,20 @@ const HistoryModal = ({ playerHistory = [], isOpen, onClose }: Props) => {
             .reverse()
             .map((i, id) => (
               <Col span={24} key={i.rankString + id}>
-                <Flex justify={(i.playerIndex === '0' && 'left') || (i.playerIndex === '1' && 'right') || 'center'}>
+                <Flex
+                  justify={
+                    (i.result === 'draw' && 'center') ||
+                    (i.playerIndex === '0' && 'left') ||
+                    (i.playerIndex === '1' && 'right') ||
+                    ''
+                  }
+                >
                   <div
                     className={
-                      (i.playerIndex === '0' && style.blue) || (i.playerIndex === '1' && style.red) || style.draw
+                      (i.result === 'draw' && style.draw) ||
+                      (i.playerIndex === '0' && style.blue) ||
+                      (i.playerIndex === '1' && style.red) ||
+                      ''
                     }
                   >
                     {i.rankString}

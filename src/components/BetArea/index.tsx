@@ -59,7 +59,7 @@ const BetArea = (props: Props) => {
       className={`${(showWin || disabled) && style.hidden} ${showWin && !data?.[checkKey]?.at(-1) && style.disabled}`}
     >
       <ButtonCustom className={style.bettingButton} onClick={debounce(() => handleBetting(), 50)}>
-        <Flex vertical gap={15}>
+        <Flex vertical gap={15} align='center'>
           <p className={`${style.content} ${xs ? 'dangerHTMLThreeLine' : 'dangerHTMLTwoLine'}`}>{content}</p>
           <Flex vertical gap={xs ? 2 : 3}>
             <p className={style.valuation}>{valuation}</p>
