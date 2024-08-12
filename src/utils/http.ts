@@ -21,15 +21,17 @@ const setAccessToken = (token: string | null) => {
 
 // Hàm để thực hiện refresh token
 const refreshToken = async (): Promise<string | null> => {
-  const refreshToken = localStorage.getItem('rff636edtg7rf1')
-  const response = await html.get('/auth/refresh-token?token=' + refreshToken)
-
-  const newAccessToken = response.data.accessToken
-  const newRefreshToken = response.data.refreshToken
-
-  setAccessToken(newAccessToken)
-  localStorage.setItem('rff636edtg7rf1', newRefreshToken)
-  return newAccessToken
+  try {
+    const refreshToken = localStorage.getItem('rff636edtg7rf1')
+    const response = await html.get('/auth/refresh-token?token=' + refreshToken)
+    const { accessToken, refreshToken: newRefreshToken } = response.data
+    setAccessToken(accessToken)
+    localStorage.setItem('rff636edtg7rf1', newRefreshToken)
+    return accessToken
+  } catch (error) {
+    console.error('Failed to refresh token', error)
+    return null
+  }
 }
 
 // Intercept trước khi gửi request
@@ -57,14 +59,17 @@ html.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true
+    if (error.response.status === 401) {
       if (error.response.data.name === 'JsonWebTokenError') {
-        const newAccessToken = await refreshToken()
+        try {
+          const newAccessToken = await refreshToken()
 
-        if (newAccessToken) {
-          originalRequest.headers.authorization = `Bearer ${newAccessToken.replace(/"/g, '')}`
-          return axios(originalRequest)
+          if (newAccessToken) {
+            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken.replace(/"/g, '')}`
+            return html(originalRequest)
+          }
+        } catch (refreshError) {
+          return Promise.reject(refreshError)
         }
       }
     }
