@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import GlobalStyles from './components/GlobalStyles/globalStyles.tsx'
 import { AppProvider } from './contexts/app.context.tsx'
+import { SocketProvider } from './lib/providers/socket.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,56 +24,58 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <AppProvider>
-            <GlobalStyles>
-              <ConfigProvider
-                // button={{ className: 'buttonPrimary' }}
-                theme={{
-                  token: {
-                    // colorPrimary: '#4862FF',
-                    // colorPrimaryActive: '#5f76f5',
-                    // colorPrimaryBorder: '#4862FF',
-                    // colorPrimaryHover: '#5f76f5',
-                    // colorTextPlaceholder: '#939393',
-                    // colorInfo: '#1EA69A',
-                    // colorBorder: '#D9D9D9',
-                    // paddingContentHorizontal: 14,
-                    // colorLink: 'black',
-                    // colorLinkActive: '#5f76f5',
-                    // colorLinkHover: '#5f76f5',
-                    // borderRadius: 4,
-                    // borderRadiusLG: 4,
-                    // borderRadiusOuter: 8,
-                    // borderRadiusSM: 8,
-                    // borderRadiusXS: 8,
-                    // controlOutlineWidth: 1,
-                    // // colorSplit: '#4862FF',
-                    // colorBorderSecondary: '#E5E7E8',
-                    // colorBgLayout: 'white'
-                  },
-                  components: {
-                    Layout: {
-                      headerBg: 'white',
-                      headerColor: 'white',
-                      siderBg: 'white',
-                      bodyBg: 'white'
+            <SocketProvider>
+              <GlobalStyles>
+                <ConfigProvider
+                  // button={{ className: 'buttonPrimary' }}
+                  theme={{
+                    token: {
+                      // colorPrimary: '#4862FF',
+                      // colorPrimaryActive: '#5f76f5',
+                      // colorPrimaryBorder: '#4862FF',
+                      // colorPrimaryHover: '#5f76f5',
+                      // colorTextPlaceholder: '#939393',
+                      // colorInfo: '#1EA69A',
+                      // colorBorder: '#D9D9D9',
+                      // paddingContentHorizontal: 14,
+                      // colorLink: 'black',
+                      // colorLinkActive: '#5f76f5',
+                      // colorLinkHover: '#5f76f5',
+                      // borderRadius: 4,
+                      // borderRadiusLG: 4,
+                      // borderRadiusOuter: 8,
+                      // borderRadiusSM: 8,
+                      // borderRadiusXS: 8,
+                      // controlOutlineWidth: 1,
+                      // // colorSplit: '#4862FF',
+                      // colorBorderSecondary: '#E5E7E8',
+                      // colorBgLayout: 'white'
                     },
-                    Menu: {
-                      collapsedWidth: 280
-                    },
-                    Table: {
-                      headerBg: '#fafafa40'
+                    components: {
+                      Layout: {
+                        headerBg: 'white',
+                        headerColor: 'white',
+                        siderBg: 'white',
+                        bodyBg: 'white'
+                      },
+                      Menu: {
+                        collapsedWidth: 280
+                      },
+                      Table: {
+                        headerBg: '#fafafa40'
+                      }
                     }
-                  }
-                }}
-              >
-                {/* <Perloader> */}
+                  }}
+                >
+                  {/* <Perloader> */}
 
-                <App />
+                  <App />
 
-                <FloatButton.BackTop />
-                {/* </Perloader> */}
-              </ConfigProvider>
-            </GlobalStyles>
+                  <FloatButton.BackTop />
+                  {/* </Perloader> */}
+                </ConfigProvider>
+              </GlobalStyles>
+            </SocketProvider>
           </AppProvider>
         </QueryClientProvider>
       </ErrorBoundary>

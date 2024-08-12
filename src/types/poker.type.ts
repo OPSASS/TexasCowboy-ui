@@ -18,7 +18,7 @@ export interface BettingDataState {
 export interface BettingState {
   userId: string
   gameId: string
-  detailedHistory: BettingDataState[]
+  detailedHistory?: BettingDataState[]
   totalCoin?: number
   oldCoin?: number
   createdAt?: string

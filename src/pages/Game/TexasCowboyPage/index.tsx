@@ -1,20 +1,20 @@
 import customApi from '@/apis/custom.api'
-import { historyApi, pokerApi } from '@/apis/index.api'
 import BetArea from '@/components/BetArea'
 import BettingValue from '@/components/BettingValue'
-import ButtonCustom from '@/components/ButtonCustom/ButtonCustom'
 import CardRender from '@/components/CardRender'
 import CountDownTimer from '@/components/CountDown'
 import Container from '@/components/Layout/Container/Container'
 import RenderDot from '@/components/RenderDot'
 import { AppContext } from '@/contexts/app.context'
 import useResponsive from '@/hooks/useResponsives'
+import { useSocket } from '@/lib/providers/socket'
 import { HistoriesState } from '@/types/histories.type'
 import { BettingState, PokerState } from '@/types/poker.type'
 import { RightOutlined, RiseOutlined } from '@ant-design/icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Col, Flex, Row } from 'antd'
-import { useContext, useEffect, useState } from 'react'
+import dayjs from 'dayjs'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import bgTx from '../../../assets/JPG/background-texas.jpg'
 import boy from '../../../assets/PNG/Boy.png'
 import girl from '../../../assets/PNG/Girl.png'
@@ -23,36 +23,85 @@ import HistoryModal from './Components/HistoryModal'
 import VensusScreen from './Components/VensusScreen'
 import style from './styles.module.scss'
 
+const CountdownNowTimer = ({
+  children,
+  className,
+  onEnd
+}: {
+  children?: React.ReactNode
+  className?: string
+  onEnd?: () => void
+}) => {
+  const [remainingTime, setRemainingTime] = useState(0)
+
+  useEffect(() => {
+    const updateRemainingTime = () => {
+      const now = dayjs()
+      const nextGameTime = now.startOf('second').add(30 - (now.second() % 30), 'second')
+      const diffInSeconds = nextGameTime.diff(now, 'second')
+      setRemainingTime(diffInSeconds)
+    }
+
+    const interval = setInterval(() => {
+      setRemainingTime((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval)
+          if (onEnd) onEnd()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    updateRemainingTime()
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className={className}>
+      <div className={style.countdown} style={{ display: remainingTime === 0 ? 'none' : 'unset' }}>
+        {remainingTime > 0 && (
+          <Flex vertical align='center' justify='center' style={{ height: '100%' }}>
+            <p>Next game starts in:</p> <h2>{remainingTime}s</h2>
+          </Flex>
+        )}
+      </div>
+      {children}
+    </div>
+  )
+}
+
 const TexasCowboyPage = () => {
   const { bettingData, profile, userWallet, setBettingData, setCoinAdd } = useContext(AppContext)
-  const queryClient = useQueryClient()
   const { sm } = useResponsive()
+  const socket = useSocket()
+  const queryClient = useQueryClient()
   const initCards = { player1: [0, 0], player2: [0, 0], dealer: [0, 0, 0, 0, 0] }
   const [turn, setTurn] = useState<PokerState>(initCards)
   const [historyData, setHistoryData] = useState<HistoriesState>()
-  const [play, setPlay] = useState(false)
-  const [turnId, setTurnId] = useState('')
   const [showResult, setShowResult] = useState(false)
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(true)
   const [startBetting, setStartBetting] = useState(false)
   const [openHistory, setOpenHistory] = useState(false)
   const [isPlay, setIsPlay] = useState(false)
-
+  const [gameAction, setGameAction] = useState<'START' | 'END' | null>(null)
   const turnTime = 30000
+  const [call, setCall] = useState(false)
 
   const { data } = useQuery({
-    queryKey: ['historyData'],
+    queryKey: ['historyData', call],
     queryFn: () => {
-      return historyApi.find({ targetModel: 'TEXAS_COWBOY' }, { limit: 1, sort: { updatedAt: -1 } })
+      return customApi.findPrevHistory({ targetModel: 'TEXAS_COWBOY' })
     }
   })
 
   useEffect(() => {
-    if (data?.data.docs) setHistoryData(data.data?.docs?.[0])
+    if (data?.data) setHistoryData(data.data)
   }, [data])
 
   const bettingMutation = useMutation({
-    mutationFn: (body: BettingState) => customApi.pokerBetting(body),
+    mutationFn: (body: BettingState) => customApi.pokerBetting({ ...body, detailedHistory: bettingData }),
     mutationKey: ['bettingMutation'],
     onSuccess(data) {
       setTimeout(() => {
@@ -63,58 +112,73 @@ const TexasCowboyPage = () => {
       }, 1000)
     }
   })
-  const historyMutation = useMutation({
-    mutationFn: (id: string) => historyApi.detail(id),
-    onSuccess(data) {
-      setTimeout(() => {
-        setHistoryData(data.data)
-        setShowResult(true)
-      }, 1700)
-    }
-  })
 
-  const playMutation = useMutation({
-    mutationFn: (body: any) => pokerApi.create(body),
-    onSuccess(data) {
-      setTurn({ ...turn, ...data.data })
-      setTurnId(data.data._id!)
-      setIsPlay(true)
-      setTimeout(() => {
-        setDisabled(false)
-        setStartBetting(true)
-        setIsPlay(false)
-      }, 2700)
+  const pokerGameStartHandler = useCallback(
+    (data: PokerState) => {
+      if (data && !gameAction) {
+        setGameAction('START')
+        setTurn(data)
+        setIsPlay(true)
+        setDisabled(true)
 
-      // betting time
-      setTimeout(() => {
-        finishMutation.mutate({})
+        setTimeout(() => {
+          setIsPlay(false)
+          setDisabled(false)
+          setStartBetting(true)
+        }, 2700)
+      }
+    },
+    [gameAction]
+  )
+
+  const pokerGameEndHandler = useCallback(
+    (data: PokerState) => {
+      if (data && gameAction === 'START') {
+        setGameAction('END')
         setStartBetting(false)
-      }, turnTime / 2 + 2700)
+        setTurn(data)
+        setDisabled(true)
+        setTimeout(() => {
+          bettingMutation.mutate({ gameId: data._id!, userId: profile._id })
+        }, 500)
+
+        setTimeout(() => {
+          setTurn(initCards)
+          setShowResult(false)
+          setBettingData([])
+          setCoinAdd(0)
+        }, turnTime / 3)
+      }
+    },
+    [gameAction, bettingMutation, profile._id]
+  )
+
+  const historyPokerTurnHandler = useCallback(
+    (data: HistoriesState) => {
+      if (data && gameAction === 'END') {
+        setGameAction(null)
+        setTimeout(() => {
+          setHistoryData(data)
+          setShowResult(true)
+        }, 1700)
+      }
+    },
+    [gameAction]
+  )
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('pokerGameStart', pokerGameStartHandler)
+      socket.on('pokerGameEnd', pokerGameEndHandler)
+      socket.on('historyPokerTurn', historyPokerTurnHandler)
+
+      return () => {
+        socket.off('pokerGameStart', pokerGameStartHandler)
+        socket.off('pokerGameEnd', pokerGameEndHandler)
+        socket.off('historyPokerTurn', historyPokerTurnHandler)
+      }
     }
-  })
-
-  const finishMutation = useMutation({
-    mutationFn: (body: any) => pokerApi.update(body, turnId),
-    onSuccess(data) {
-      setTurn(data.data)
-      setDisabled(true)
-      historyMutation.mutate(data.data.historyId!)
-      setTimeout(() => {
-        bettingMutation.mutate({ gameId: turnId, userId: profile._id, detailedHistory: bettingData })
-      }, 500)
-
-      setTimeout(() => {
-        setTurn(initCards)
-        setShowResult(false)
-        setBettingData([])
-        setCoinAdd(0)
-      }, turnTime / 3)
-
-      setTimeout(() => {
-        playMutation.mutate({})
-      }, turnTime / 3 + 2300)
-    }
-  })
+  }, [socket, pokerGameStartHandler, pokerGameEndHandler, historyPokerTurnHandler])
 
   return (
     <>
@@ -224,7 +288,7 @@ const TexasCowboyPage = () => {
                 </Flex>
               </Col>
             </Row>
-            <div className={style.bettingArea}>
+            <CountdownNowTimer className={style.bettingArea} onEnd={() => setCall(true)}>
               <Row gutter={sm ? [3, 3] : [6, 6]}>
                 <BetArea
                   data={historyData?.gameHistory}
@@ -339,24 +403,10 @@ const TexasCowboyPage = () => {
                   disabled={disabled}
                 />
               </Row>
-            </div>
+            </CountdownNowTimer>
+
             <BettingValue />
           </Flex>
-
-          <ButtonCustom
-            onClick={() => {
-              if (play) window.location.reload()
-              else {
-                playMutation.mutate({})
-                setPlay(!play)
-              }
-            }}
-            type={play ? 'default' : 'primary'}
-            danger={play}
-            disabled={!showResult && play}
-          >
-            {play ? 'Stop' : 'Play'}
-          </ButtonCustom>
         </div>
         <HistoryModal
           isOpen={openHistory}

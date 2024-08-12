@@ -15,6 +15,12 @@ const customApi = {
   },
   reExecuteTransaction(id: string) {
     return http.get<any>(ENDPOINT.RE_EXECUTE_TRANSACTION_PATH + id)
+  },
+  findPrevHistory(body: any) {
+    return http.post<any>(ENDPOINT.FIND_PREV_HISTORY_PATH, body)
+  },
+  findNowPoker() {
+    return http.post<any>(ENDPOINT.FIND_NOW_POKER_PATH)
   }
 }
 

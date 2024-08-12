@@ -11,6 +11,7 @@ export const ENDPOINT = {
   // :::::::::::::::::::: POKER PATH :::::::::::::::::::::
   POKER_PATH: '/poker/',
   FIND_POKER_PATH: '/poker/find',
+  FIND_NOW_POKER_PATH: '/poker/find-now',
   POKER_BETTING_PATH: '/poker/betting',
 
   // :::::::::::::::::::: WALLET PATH :::::::::::::::::::::
@@ -26,5 +27,6 @@ export const ENDPOINT = {
 
   // :::::::::::::::::::: HISTORY PATH :::::::::::::::::::::
   HISTORY_PATH: '/history/',
-  FIND_HISTORY_PATH: '/history/find'
+  FIND_HISTORY_PATH: '/history/find',
+  FIND_PREV_HISTORY_PATH: '/history/find-prev'
 }
