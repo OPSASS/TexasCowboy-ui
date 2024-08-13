@@ -109,6 +109,7 @@ const Nav = () => {
       titleSize={sm ? 16 : 24}
       titleHref={!gamePath ? '/' : undefined}
       className={style.navBody}
+      style={{ position: gamePath ? 'fixed' : 'absolute' }}
       rightTitle={
         isAuthenticated && (
           <Flex gap={sm ? 3 : 10}>

@@ -74,7 +74,7 @@ const CountdownNowTimer = ({
 
 const TexasCowboyPage = () => {
   const { bettingData, profile, userWallet, setBettingData, setCoinAdd } = useContext(AppContext)
-  const { sm } = useResponsive()
+  const { sm, md } = useResponsive()
   const socket = useSocket()
   const queryClient = useQueryClient()
   const initCards = { player1: [0, 0], player2: [0, 0], dealer: [0, 0, 0, 0, 0] }
@@ -184,228 +184,238 @@ const TexasCowboyPage = () => {
     <>
       {isPlay && <VensusScreen duration={1.8} />}
       <Container size='sm' backgroundUrl={bgTx} imgStyle={{ position: 'fixed' }}>
-        <div className={style.table}>
-          <Flex justify='space-between' align='center' vertical className={style.gameArea}>
-            <Flex justify='space-between'>
-              <div
-                className={`${style.boy} ${
-                  showResult && historyData?.gameHistory?.result[0]?.result === 'lose' && style.lose
-                }`}
-              >
-                <img src={boy} alt='boy' />
-                <div className={style.showResult}>
-                  {showResult && historyData?.gameHistory?.result && (
-                    <h1 className={style.sweetTitle}>
-                      <p data-text={historyData?.gameHistory?.result[0]?.rankString}></p>
+        <div className={style.gameArea}>
+          <Flex justify='space-between' align='center' vertical className={style.table}>
+            <div className={style.gameBody}>
+              <Flex justify='space-between' className={style.resultArea}>
+                <div
+                  className={`${style.boy} ${
+                    showResult && historyData?.gameHistory?.result[0]?.result === 'lose' && style.lose
+                  }`}
+                >
+                  <img src={boy} alt='boy' />
+                  <div className={style.showResult}>
+                    <Flex justify='center' className={style.playerCard}>
+                      {turn.player1.map((c, id) => (
+                        <CardRender
+                          key={'pl1' + id}
+                          cardNumber={c}
+                          delay={id === 0 ? 1700 : 0}
+                          timer={id === 1 ? 10000 : turnTime - 2000}
+                          cardSize={(sm && 4.5) || (md && 5) || 7}
+                        />
+                      ))}
+                    </Flex>
+                    <h1
+                      className={`${style.sweetTitle} ${
+                        showResult && historyData?.gameHistory?.result[0]?.result === 'lose' && style.lose
+                      }`}
+                    >
+                      {showResult && historyData?.gameHistory?.result && (
+                        <p data-text={historyData?.gameHistory?.result[0]?.rankString}></p>
+                      )}
                     </h1>
-                  )}
-                </div>
-              </div>
-              <div className={style.jackpot}>
-                <img src={jackpot} alt='jackpot' />
-                <div className={style.content}>
-                  <p>Jackpot</p>
-                  {/* <h2>{useCounting(3454112, 3454112 + 3000, 2000, 0)}</h2> */}
-                  <h2>3.454.112</h2>
-                </div>
-              </div>
-              <div
-                className={`${style.girl} ${
-                  showResult && historyData?.gameHistory?.result[1]?.result === 'lose' && style.lose
-                }`}
-              >
-                <img src={girl} alt='girl' />
-                <div className={style.showResult}>
-                  {showResult && historyData?.gameHistory?.result && (
-                    <h1 className={style.sweetTitle}>
-                      <p data-text={historyData?.gameHistory?.result[1]?.rankString}></p>
-                    </h1>
-                  )}
-                </div>
-              </div>
-            </Flex>
-            <Row gutter={sm ? [3, 3] : [24, 24]} align={sm ? 'top' : 'bottom'} style={{ marginTop: sm ? '8vh' : 40 }}>
-              <Col span={6}>
-                <Flex justify='space-between' gap={6}>
-                  {turn.player1.map((c, id) => (
-                    <CardRender
-                      key={'pl1' + id}
-                      cardNumber={c}
-                      delay={id === 0 ? 1700 : 0}
-                      timer={id === 1 ? 10000 : turnTime - 2000}
-                      cardSize={sm ? 4 : 9}
-                    />
-                  ))}
-                </Flex>
-              </Col>
-              <Col span={12}>
-                <Flex vertical justify='center' align='center' gap={sm ? 0 : 6}>
-                  <div className={style.growthArea} onClick={() => setOpenHistory(true)}>
-                    <div className={style.growthBody}>
-                      <Flex gap={sm ? 3 : 5} justify='center'>
-                        <RiseOutlined style={{ fontSize: sm ? 8 : 10, color: 'white' }} />
-                        {historyData?.gameHistory?.playerHistory?.slice(-10).map((p, id) => (
-                          <RenderDot
-                            result={
-                              (p.playerIndex === '0' && p.result === 'win' && 'blue') ||
-                              (p.playerIndex === '1' && p.result === 'win' && 'red') ||
-                              undefined
-                            }
-                            key={'rs' + id}
-                            size={sm ? 8 : 10}
-                          />
-                        ))}
-                        <RightOutlined style={{ fontSize: sm ? 8 : 10, color: 'white' }} />
-                      </Flex>
-                    </div>
                   </div>
-                  <Flex justify='space-between' gap={6} style={{ marginTop: sm ? '6vh' : 0 }}>
-                    {turn.dealer.map((c, id) => (
-                      <CardRender key={'dl' + id} cardNumber={c} delay={1000 + 100 * (id + 1)} cardSize={sm ? 5 : 7} /> //1500
-                    ))}
-                  </Flex>
-                  {startBetting && (
-                    <div className={style.countDown}>
-                      <p>Betting time:</p>
-                      <h4>
-                        <CountDownTimer initTime={turnTime / 120000} align='center' />
-                      </h4>
-                    </div>
-                  )}
-                </Flex>
-              </Col>
-              <Col span={6}>
-                <Flex justify='space-between' gap={6}>
-                  {turn.player2.map((c, id) => (
-                    <CardRender
-                      key={'pl2' + id}
-                      cardNumber={c}
-                      delay={id === 0 ? 1700 + 300 : 300}
-                      timer={id === 1 ? 9700 : turnTime - 2300}
-                      cardSize={sm ? 4 : 9}
-                    />
-                  ))}
-                </Flex>
-              </Col>
-            </Row>
-            <CountdownNowTimer className={style.bettingArea} onEnd={() => setCall(true)}>
-              <Row gutter={sm ? [3, 3] : [6, 6]}>
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='Blue'
-                  checkKey='blue'
-                  countKey='countBlue'
-                  valuation='x2'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='Draw'
-                  checkKey='draw'
-                  countKey='countDraw'
-                  valuation='x20'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='Red'
-                  checkKey='red'
-                  countKey='countRed'
-                  valuation='x2'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
+                </div>
+                <div className={style.jackpot}>
+                  <img src={jackpot} alt='jackpot' />
+                  <div className={style.content}>
+                    <p>Jackpot</p>
+
+                    <h2>3.454.112</h2>
+                  </div>
+                </div>
+                <div className={style.girl}>
+                  <img
+                    src={girl}
+                    alt='girl'
+                    className={showResult && historyData?.gameHistory?.result[1]?.result === 'lose' ? style.lose : ''}
+                  />
+                  <div className={style.showResult}>
+                    <Flex justify='center' className={style.playerCard}>
+                      {turn.player2.map((c, id) => (
+                        <CardRender
+                          key={'pl2' + id}
+                          cardNumber={c}
+                          delay={id === 0 ? 1700 + 300 : 300}
+                          timer={id === 1 ? 9700 : turnTime - 2300}
+                          cardSize={(sm && 4.5) || (md && 5) || 7}
+                        />
+                      ))}
+                    </Flex>
+                    <h1
+                      className={`${style.sweetTitle} ${
+                        showResult && historyData?.gameHistory?.result[1]?.result === 'lose' && style.lose
+                      }`}
+                    >
+                      {showResult && historyData?.gameHistory?.result && (
+                        <p data-text={historyData?.gameHistory?.result[1]?.rankString}></p>
+                      )}
+                    </h1>
+                  </div>
+                </div>
+              </Flex>
+              <Row justify='center' style={{ marginTop: sm ? '8vh' : 0 }}>
                 <Col span={16}>
-                  <Flex justify='center' className={style.contentColor}>
-                    Player Wins
+                  <Flex vertical justify='center' align='center' gap={sm ? 0 : 6}>
+                    <div className={style.growthArea} onClick={() => setOpenHistory(true)}>
+                      <div className={style.growthBody}>
+                        <Flex gap={sm ? 3 : 5} justify='center' align='center'>
+                          <RiseOutlined style={{ fontSize: sm ? 8 : 10, color: 'white' }} />
+                          {historyData?.gameHistory?.playerHistory?.slice(-10).map((p, id) => (
+                            <RenderDot
+                              result={
+                                (p.playerIndex === '0' && p.result === 'win' && 'blue') ||
+                                (p.playerIndex === '1' && p.result === 'win' && 'red') ||
+                                undefined
+                              }
+                              key={'rs' + id}
+                              size={sm ? 6.5 : 10}
+                            />
+                          ))}
+                          <RightOutlined style={{ fontSize: sm ? 8 : 10, color: 'white' }} />
+                        </Flex>
+                      </div>
+                    </div>
+                    <Flex justify='space-between' gap={6} style={{ marginTop: sm ? '1vh' : 0 }}>
+                      {turn.dealer.map((c, id) => (
+                        <CardRender
+                          key={'dl' + id}
+                          cardNumber={c}
+                          delay={1000 + 100 * (id + 1)}
+                          cardSize={(sm && 4.5) || (md && 5) || 7}
+                        /> //1500
+                      ))}
+                    </Flex>
+                    {startBetting && (
+                      <div className={style.countDown}>
+                        <p>Betting time:</p>
+                        <h4>
+                          <CountDownTimer initTime={turnTime / 120000} align='center' />
+                        </h4>
+                      </div>
+                    )}
                   </Flex>
                 </Col>
-                <Col span={8}>
-                  <Flex justify='center' className={style.contentColor}>
-                    Any Player
-                  </Flex>
-                </Col>
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='High Card/One Pair'
-                  checkKey='highCardOrOnePair'
-                  countKey='countHighCardOrOnePair'
-                  valuation='x2.2'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='Two Pairs'
-                  checkKey='twoPair'
-                  countKey='countTwoPair'
-                  valuation='x3.1'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='Suited/Connector/Suited Connector'
-                  checkKey='isFlush'
-                  countKey='countIsFlush'
-                  valuation='x1.66'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='Three of a Kind/Straight/Flush'
-                  checkKey='threeOfAKindOrStraightOrFlush'
-                  countKey='countThreeOfAKindOrStraightOrFlush'
-                  valuation='x4.7'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='Full House'
-                  checkKey='fullHouse'
-                  countKey='countFullHouse'
-                  valuation='x20'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-                <BetArea
-                  data={historyData?.gameHistory}
-                  content='Is has Pair'
-                  checkKey='isHasPair'
-                  countKey='countIsHasPair'
-                  valuation='x8.5'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-                <BetArea
-                  col={16}
-                  data={historyData?.gameHistory}
-                  content='Four of a Kind/Straight Flush/Royal Flush'
-                  checkKey='fourOfAKindOrStraightFlushOrRoyalFlush'
-                  countKey='countFourOfAKindOrStraightFlushOrRoyalFlush'
-                  valuation='x248'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
-                <BetArea
-                  col={8}
-                  data={historyData?.gameHistory}
-                  content='AA'
-                  checkKey='isAA'
-                  countKey='countIsAA'
-                  valuation='x100'
-                  showWin={showResult}
-                  disabled={disabled}
-                />
               </Row>
-            </CountdownNowTimer>
+              <CountdownNowTimer className={style.bettingArea} onEnd={() => setCall(true)}>
+                <Row gutter={(sm && [3, 3]) || (md && [4, 4]) || [6, 6]}>
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='Blue'
+                    checkKey='blue'
+                    countKey='countBlue'
+                    valuation='x2'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='Draw'
+                    checkKey='draw'
+                    countKey='countDraw'
+                    valuation='x20'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='Red'
+                    checkKey='red'
+                    countKey='countRed'
+                    valuation='x2'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <Col span={16}>
+                    <Flex justify='center' className={style.contentColor}>
+                      Player Wins
+                    </Flex>
+                  </Col>
+                  <Col span={8}>
+                    <Flex justify='center' className={style.contentColor}>
+                      Any Player
+                    </Flex>
+                  </Col>
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='High Card/One Pair'
+                    checkKey='highCardOrOnePair'
+                    countKey='countHighCardOrOnePair'
+                    valuation='x2.2'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
 
-            <BettingValue />
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='Two Pairs'
+                    checkKey='twoPair'
+                    countKey='countTwoPair'
+                    valuation='x3.1'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='Suited/Connector/Suited Connector'
+                    checkKey='isFlush'
+                    countKey='countIsFlush'
+                    valuation='x1.66'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='Three of a Kind/Straight/Flush'
+                    checkKey='threeOfAKindOrStraightOrFlush'
+                    countKey='countThreeOfAKindOrStraightOrFlush'
+                    valuation='x4.7'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='Full House'
+                    checkKey='fullHouse'
+                    countKey='countFullHouse'
+                    valuation='x20'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <BetArea
+                    data={historyData?.gameHistory}
+                    content='Is has Pair'
+                    checkKey='isHasPair'
+                    countKey='countIsHasPair'
+                    valuation='x8.5'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <BetArea
+                    col={16}
+                    data={historyData?.gameHistory}
+                    content='Four of a Kind/Straight Flush/Royal Flush'
+                    checkKey='fourOfAKindOrStraightFlushOrRoyalFlush'
+                    countKey='countFourOfAKindOrStraightFlushOrRoyalFlush'
+                    valuation='x248'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                  <BetArea
+                    col={8}
+                    data={historyData?.gameHistory}
+                    content='AA'
+                    checkKey='isAA'
+                    countKey='countIsAA'
+                    valuation='x100'
+                    showWin={showResult}
+                    disabled={disabled}
+                  />
+                </Row>
+              </CountdownNowTimer>
+              <BettingValue />
+            </div>
           </Flex>
         </div>
         <HistoryModal

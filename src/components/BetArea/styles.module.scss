@@ -1,18 +1,25 @@
 @import '../GlobalStyles/responsive.scss';
 .bettingButton {
   padding: 0.5em 0;
-  min-height: 10vh;
   width: 100%;
+  min-height: 10vh;
   background-color: #fff9ae;
-  border-radius: 5px;
-
-  @include respond-to(xl) {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  @include respond-to(md) {
     padding: 0.5em 0;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+    min-height: 9vh;
+  }
+  @include respond-to(lg) {
+    padding: 0.5em 0;
+    min-height: 9vh;
+  }
+  @include respond-to(xxl) {
+    padding: 0.5em 0;
+    min-height: 7vh;
   }
   p {
     line-height: 1;
@@ -54,6 +61,7 @@
     left: 50%;
     font-size: 2em;
     font-weight: bold;
+    opacity: 0.9;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);

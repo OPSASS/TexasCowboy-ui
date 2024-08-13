@@ -47,7 +47,7 @@ const BettingValue = () => {
   }, [userWallet])
 
   return (
-    <div style={{ marginTop: 5, textAlign: 'center' }}>
+    <div style={{ marginTop: xs ? 15 : 5, textAlign: 'center', width: xs ? '80%' : '100%', margin: 'auto' }}>
       <p style={{ color: 'white', fontSize: xs ? 12 : 14 }}>Betting value</p>
       <Flex gap={md ? 5 : 10} wrap justify='center'>
         {values
@@ -57,6 +57,7 @@ const BettingValue = () => {
               key={value}
               type={bettingValue === value ? 'primary' : 'default'}
               onClick={() => setBettingValue(value)}
+              size={xs ? 'small' : 'middle'}
             >
               {formatNumber(value)}
             </ButtonCustom>
@@ -66,6 +67,7 @@ const BettingValue = () => {
             setBettingValue(userWallet / 2)
           }}
           type={userWallet / 2 === bettingValue ? 'primary' : 'default'}
+          size={xs ? 'small' : 'middle'}
         >
           1/2
         </ButtonCustom>
@@ -75,6 +77,7 @@ const BettingValue = () => {
           }}
           danger
           type={userWallet == bettingValue ? 'primary' : 'default'}
+          size={xs ? 'small' : 'middle'}
         >
           All in
         </ButtonCustom>

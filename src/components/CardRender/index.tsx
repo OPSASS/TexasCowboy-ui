@@ -1,8 +1,8 @@
+import { Flex } from 'antd'
 import { useEffect, useState } from 'react'
 import backCard from '../../assets/JPG/backCard.png'
+import style from './styles.module.scss'
 
-import { Flex } from 'antd'
-import './styles.scss'
 type Props = {
   cardNumber?: number
   timer?: number
@@ -18,36 +18,36 @@ type CardSuit = {
 const GetSuit = ({ suit = '♥️', size = 14 }: { suit?: string; size?: number }) => {
   if (suit === '♥️')
     return (
-      <div className='heart' style={{ fontSize: size }}>
-        <div className='square'></div>
-        <div className='circle1'></div>
-        <div className='circle2'></div>
+      <div className={style.heart} style={{ fontSize: size }}>
+        <div className={style.square}></div>
+        <div className={style.circle1}></div>
+        <div className={style.circle2}></div>
       </div>
     )
 
   if (suit === '♦️')
     return (
-      <div className='diamond' style={{ fontSize: size }}>
-        <div className='square'></div>
+      <div className={style.diamond} style={{ fontSize: size }}>
+        <div className={style.square}></div>
       </div>
     )
 
   if (suit === '♣️')
     return (
-      <div className='club' style={{ fontSize: size }}>
-        <div className='circle1'></div>
-        <div className='circle2'></div>
-        <div className='circle3'></div>
-        <div className='tail'></div>
+      <div className={style.club} style={{ fontSize: size }}>
+        <div className={style.circle1}></div>
+        <div className={style.circle2}></div>
+        <div className={style.circle3}></div>
+        <div className={style.tail}></div>
       </div>
     )
 
   return (
-    <div className='spade' style={{ fontSize: size }}>
-      <div className='square'></div>
-      <div className='circle1'></div>
-      <div className='circle2'></div>
-      <div className='tail'></div>
+    <div className={style.spade} style={{ fontSize: size }}>
+      <div className={style.square}></div>
+      <div className={style.circle1}></div>
+      <div className={style.circle2}></div>
+      <div className={style.tail}></div>
     </div>
   )
 }
@@ -93,31 +93,37 @@ const CardRender = ({ cardNumber = 0, timer = 10000, delay = 0, cardImg = backCa
   }
 
   return (
-    <div className={`cards ${flip ? 'flip' : 'flipY'}`} style={{ fontSize: cardSize }}>
-      <div className='backCard'>
-        <img src={cardImg} />
-      </div>
-      <div className='frontCard'>
-        <div className={`bodyCard ${card?.suit === '♥️' || card?.suit === '♦️' ? 'redCard' : 'blackCard'}`}>
-          <Flex justify='space-between' vertical style={{ height: '100%' }}>
-            <Flex>
-              <Flex vertical align='center'>
-                <p>{card?.value}</p>
-                <GetSuit suit={card?.suit} size={cardSize} />
+    <div>
+      <div className={`${style.cards} ${flip ? style.flip : style.flipY}`} style={{ fontSize: cardSize }}>
+        <div className={style.backCard}>
+          <img src={cardImg} />
+        </div>
+        <div className={style.frontCard}>
+          <div
+            className={`${style.bodyCard} ${
+              card?.suit === '♥️' || card?.suit === '♦️' ? style.redCard : style.blackCard
+            }`}
+          >
+            <Flex justify='space-between' vertical style={{ height: '100%' }}>
+              <Flex>
+                <Flex vertical align='center'>
+                  <p>{card?.value}</p>
+                  <GetSuit suit={card?.suit} size={cardSize} />
+                </Flex>
+              </Flex>
+
+              <div className={style.bigSuit}>
+                <GetSuit suit={card?.suit} size={cardSize * 3} />
+              </div>
+
+              <Flex justify='end'>
+                <Flex vertical align='center' gap={cardSize}>
+                  <GetSuit suit={card?.suit} size={cardSize} />
+                  <p>{card?.value}</p>
+                </Flex>
               </Flex>
             </Flex>
-
-            <div className='bigSuit'>
-              <GetSuit suit={card?.suit} size={cardSize * 3} />
-            </div>
-
-            <Flex justify='end'>
-              <Flex vertical align='center' gap={cardSize}>
-                <GetSuit suit={card?.suit} size={cardSize} />
-                <p>{card?.value}</p>
-              </Flex>
-            </Flex>
-          </Flex>
+          </div>
         </div>
       </div>
     </div>

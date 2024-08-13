@@ -1,12 +1,12 @@
 @import '../../GlobalStyles/responsive.scss';
 .navBody {
-  position: absolute;
   z-index: 100;
   width: 100%;
   background-color: transparent !important;
   @include respond-to(xl) {
     margin-top: 4vh;
   }
+
   .wallet {
     position: relative;
     .coin {
