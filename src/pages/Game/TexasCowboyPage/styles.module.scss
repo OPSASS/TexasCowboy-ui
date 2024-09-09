@@ -59,7 +59,7 @@
         top: -5.5em;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 100;
+        z-index: 20;
         @include respond-to(xs) {
           top: -3em;
         }
@@ -286,6 +286,8 @@
         }
       }
       .growthArea {
+        position: relative;
+        z-index: 30;
         cursor: pointer;
         padding: 5px;
         background-color: #d17541;
@@ -352,7 +354,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 0.5em 0;
+        padding: 1.9em 0;
         color: white;
         margin: 0 auto;
         text-align: center;

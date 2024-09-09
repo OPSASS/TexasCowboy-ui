@@ -33,7 +33,7 @@ const CountdownNowTimer = ({
   onEnd?: () => void
 }) => {
   const [remainingTime, setRemainingTime] = useState(0)
-
+  const queryClient = useQueryClient()
   useEffect(() => {
     const updateRemainingTime = () => {
       const now = dayjs()
@@ -46,6 +46,9 @@ const CountdownNowTimer = ({
       setRemainingTime((prev) => {
         if (prev <= 1) {
           clearInterval(interval)
+          setTimeout(() => {
+            queryClient.invalidateQueries({ queryKey: ['historyData'] })
+          }, 900)
           if (onEnd) onEnd()
           return 0
         }
@@ -87,10 +90,9 @@ const TexasCowboyPage = () => {
   const [isPlay, setIsPlay] = useState(false)
   const [gameAction, setGameAction] = useState<'START' | 'END' | null>(null)
   const turnTime = 30000
-  const [call, setCall] = useState(false)
 
   const { data } = useQuery({
-    queryKey: ['historyData', call],
+    queryKey: ['historyData'],
     queryFn: () => {
       return customApi.findPrevHistory({ targetModel: 'TEXAS_COWBOY' })
     }
@@ -225,7 +227,11 @@ const TexasCowboyPage = () => {
                     <h2>3.454.112</h2>
                   </div>
                 </div>
-                <div className={style.girl}>
+                <div
+                  className={`${style.girl} ${
+                    showResult && historyData?.gameHistory?.result[1]?.result === 'lose' && style.lose
+                  }`}
+                >
                   <img
                     src={girl}
                     alt='girl'
@@ -298,7 +304,7 @@ const TexasCowboyPage = () => {
                   </Flex>
                 </Col>
               </Row>
-              <CountdownNowTimer className={style.bettingArea} onEnd={() => setCall(true)}>
+              <CountdownNowTimer className={style.bettingArea}>
                 <Row gutter={(sm && [3, 3]) || (md && [4, 4]) || [6, 6]}>
                   <BetArea
                     data={historyData?.gameHistory}
