@@ -28,5 +28,9 @@ export const ENDPOINT = {
   // :::::::::::::::::::: HISTORY PATH :::::::::::::::::::::
   HISTORY_PATH: '/history/',
   FIND_HISTORY_PATH: '/history/find',
-  FIND_PREV_HISTORY_PATH: '/history/find-prev'
+  FIND_PREV_HISTORY_PATH: '/history/find-prev',
+
+  // :::::::::::::::::::: RANKING PATH :::::::::::::::::::::
+  RANKING_PATH: '/ranking/',
+  FIND_RANKING_PATH: '/ranking/find'
 }

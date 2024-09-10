@@ -6,6 +6,7 @@ import CountDownTimer from '@/components/CountDown'
 import Container from '@/components/Layout/Container/Container'
 import RenderDot from '@/components/RenderDot'
 import { AppContext } from '@/contexts/app.context'
+import useCounting from '@/hooks/useCounting'
 import useResponsive from '@/hooks/useResponsives'
 import { useSocket } from '@/lib/providers/socket'
 import { HistoriesState } from '@/types/histories.type'
@@ -18,7 +19,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import bgTx from '../../../assets/JPG/background-texas.jpg'
 import boy from '../../../assets/PNG/Boy.png'
 import girl from '../../../assets/PNG/Girl.png'
-import jackpot from '../../../assets/PNG/jackpot.png'
+import jackpotBg from '../../../assets/PNG/jackpot.png'
 import HistoryModal from './Components/HistoryModal'
 import VensusScreen from './Components/VensusScreen'
 import style from './styles.module.scss'
@@ -99,7 +100,9 @@ const TexasCowboyPage = () => {
   })
 
   useEffect(() => {
-    if (data?.data) setHistoryData(data.data)
+    if (data?.data) {
+      setHistoryData(data.data)
+    }
   }, [data])
 
   const bettingMutation = useMutation({
@@ -161,6 +164,7 @@ const TexasCowboyPage = () => {
         setGameAction(null)
         setTimeout(() => {
           setHistoryData(data)
+
           setShowResult(true)
         }, 1700)
       }
@@ -220,11 +224,18 @@ const TexasCowboyPage = () => {
                   </div>
                 </div>
                 <div className={style.jackpot}>
-                  <img src={jackpot} alt='jackpot' />
+                  <img src={jackpotBg} alt='jackpot' />
                   <div className={style.content}>
                     <p>Jackpot</p>
-
-                    <h2>3.454.112</h2>
+                    <h2>
+                      {useCounting(
+                        historyData?.gameHistory?.jackpot || 0,
+                        historyData?.gameHistory?.jackpot || 0,
+                        1500,
+                        0,
+                        true
+                      )}
+                    </h2>
                   </div>
                 </div>
                 <div

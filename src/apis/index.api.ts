@@ -29,3 +29,8 @@ export const transactionApi = createApi<any>({
   endpoint: ENDPOINT.TRANSACTION_PATH,
   findEndpoint: ENDPOINT.FIND_TRANSACTION_PATH
 })
+
+export const rankingApi = createApi<any>({
+  endpoint: ENDPOINT.RANKING_PATH,
+  findEndpoint: ENDPOINT.FIND_RANKING_PATH
+})

@@ -1,4 +1,5 @@
 import { ENDPOINT } from '@/constants/endpoint'
+import { HistoriesState } from '@/types/histories.type'
 import { BettingState } from '@/types/poker.type'
 import { CheckoutState } from '@/types/wallet.type'
 import http from '@/utils/http'
@@ -17,7 +18,7 @@ const customApi = {
     return http.get<any>(ENDPOINT.RE_EXECUTE_TRANSACTION_PATH + id)
   },
   findPrevHistory(body: any) {
-    return http.post<any>(ENDPOINT.FIND_PREV_HISTORY_PATH, body)
+    return http.post<HistoriesState>(ENDPOINT.FIND_PREV_HISTORY_PATH, body)
   },
   findNowPoker() {
     return http.post<any>(ENDPOINT.FIND_NOW_POKER_PATH)

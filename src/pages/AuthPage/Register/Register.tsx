@@ -26,6 +26,7 @@ const Register = () => {
 
     onSuccess: () => {
       Notification('success', 'Account registration successful, please log in', 'Success')
+      form.resetFields()
       setTimeout(() => {
         navitage(PATH.LOGIN)
       }, 3000)

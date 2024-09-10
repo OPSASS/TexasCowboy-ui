@@ -1,9 +1,17 @@
 import { formatNumberToString } from '@/utils/common'
 import { useEffect, useRef, useState } from 'react'
-const useCounting = (startNumber: number, endNumber: number, duration: number, delay: number) => {
+
+const useCounting = (
+  startNumber: number,
+  endNumber: number,
+  duration: number,
+  delay: number,
+  keepCounting: boolean
+) => {
   const [count, setCount] = useState(startNumber || 0)
   const startTimeRef = useRef<number | null>(null)
   const animationFrameIdRef = useRef<number>()
+  const previousEndNumberRef = useRef<number>(startNumber) // Ref to store the previous end number
 
   useEffect(() => {
     if (
@@ -37,12 +45,16 @@ const useCounting = (startNumber: number, endNumber: number, duration: number, d
         }
 
         const percentage = Math.min(progress / duration, 1)
-        const currentCount = Math.floor((endNumber - startNumber) * percentage + startNumber)
+        const currentCount = Math.floor(
+          (endNumber - previousEndNumberRef.current) * percentage + previousEndNumberRef.current
+        )
 
         setCount(currentCount)
 
         if (progress < duration) {
           animationFrameIdRef.current = requestAnimationFrame(startAnimation)
+        } else {
+          previousEndNumberRef.current = endNumber // Update the previous end number for future counts
         }
       }
 
@@ -57,7 +69,12 @@ const useCounting = (startNumber: number, endNumber: number, duration: number, d
       }
       clearTimeout(timeoutId)
     }
-  }, [startNumber, endNumber, duration, delay])
+  }, [startNumber, endNumber, duration, delay, keepCounting])
+
+  // Reset startTimeRef when dependencies change
+  useEffect(() => {
+    startTimeRef.current = null
+  }, [startNumber, endNumber, duration, delay, keepCounting])
 
   return formatNumberToString(count)
 }

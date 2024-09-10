@@ -34,6 +34,7 @@ export interface GameHistory {
   countIsAA: number
   countIsHasPair: number
   countIsFlush: number
+  jackpot: number
 }
 
 export interface PlayerHistory {
